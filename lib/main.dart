@@ -34,7 +34,8 @@ class ImageTransformerApp extends StatelessWidget {
       child: Consumer<AppProvider>(
         builder: (context, appProvider, child) {
           return MaterialApp(
-            title: APP_NAME,
+            title:
+                '', // Removed app title to follow professional software design like Photoshop/VSCode where no app title is shown in UI
             debugShowCheckedModeBanner: false,
             localizationsDelegates: const [
               AppLocalizations.delegate,
