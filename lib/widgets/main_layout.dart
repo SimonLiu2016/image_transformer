@@ -45,7 +45,7 @@ class _MainLayoutState extends State<MainLayout> {
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              padding: const EdgeInsets.fromLTRB(80.0, 0, 8.0, 0), // Increased left padding to avoid overlapping with system window controls
               child: Row(
                 children: [
                   // Logo/icon area
