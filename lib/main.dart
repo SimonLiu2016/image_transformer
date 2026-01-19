@@ -52,7 +52,9 @@ class ImageTransformerApp extends StatelessWidget {
               brightness: Brightness.light,
               // Pixelmator Pro style light theme
               colorScheme: const ColorScheme.light(
-                primary: Color(0xFF007AFF), // macOS system blue
+                primary: Color(
+                  0xFF5C5C5C,
+                ), // Softer gray tone to reduce contrast
                 secondary: Color(0xFF6B6B6B),
                 surface: Color(0xFFFAFAFA),
                 background: Color(0xFFFAFAFA),
@@ -81,7 +83,7 @@ class ImageTransformerApp extends StatelessWidget {
                 elevation: 0,
               ),
               tabBarTheme: const TabBarThemeData(
-                labelColor: Color(0xFF007AFF),
+                labelColor: Color(0xFF5C5C5C),
                 unselectedLabelColor: Color(0xFF8E8E93),
               ),
               inputDecorationTheme: const InputDecorationTheme(
@@ -92,7 +94,7 @@ class ImageTransformerApp extends StatelessWidget {
                   borderSide: BorderSide(color: Color(0xFFD1D1D1), width: 1),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xFF007AFF), width: 1),
+                  borderSide: BorderSide(color: Color(0xFF5C5C5C), width: 1),
                 ),
               ),
             ),
@@ -101,7 +103,9 @@ class ImageTransformerApp extends StatelessWidget {
               brightness: Brightness.dark,
               // Pixelmator Pro style dark theme
               colorScheme: const ColorScheme.dark(
-                primary: Color(0xFF007AFF), // macOS system blue
+                primary: Color(
+                  0xFF8A8A8A,
+                ), // Lighter gray tone for dark theme to reduce contrast
                 secondary: Color(0xFFAAAAAA),
                 surface: Color(0xFF1C1C1E), // Match Pixelmator Pro dark theme
                 background: Color(0xFF1C1C1E),
@@ -139,7 +143,7 @@ class ImageTransformerApp extends StatelessWidget {
                 elevation: 0,
               ),
               tabBarTheme: const TabBarThemeData(
-                labelColor: Color(0xFF007AFF),
+                labelColor: Color(0xFF8A8A8A),
                 unselectedLabelColor: Color(0xFF8E8E93),
               ),
               inputDecorationTheme: const InputDecorationTheme(
@@ -150,7 +154,7 @@ class ImageTransformerApp extends StatelessWidget {
                   borderSide: BorderSide(color: Color(0xFF48484A), width: 1),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xFF007AFF), width: 1),
+                  borderSide: BorderSide(color: Color(0xFF8A8A8A), width: 1),
                 ),
               ),
             ),
