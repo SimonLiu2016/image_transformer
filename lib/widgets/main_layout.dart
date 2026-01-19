@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import '../l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import '../services/file_service.dart';
 import '../providers/image_provider.dart' as ImageTransformProvider;
+import '../providers/app_provider.dart';
+import '../l10n/app_localizations.dart';
 import 'sidebar_panel.dart';
 import 'image_preview.dart';
 import 'batch_processor.dart';
@@ -17,162 +18,229 @@ class MainLayout extends StatefulWidget {
 
 class _MainLayoutState extends State<MainLayout> {
   bool _isBatchMode = false;
+  bool _showSettings = false;
+  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     final imageProvider = Provider.of<ImageTransformProvider.ImageProvider>(
       context,
     );
+    final appProvider = Provider.of<AppProvider>(context);
+    final localizations = AppLocalizations.of(context)!;
 
-    return Theme(
-      data: Theme.of(context).copyWith(
-        tabBarTheme: TabBarTheme.of(
-          context,
-        ).copyWith(labelColor: Colors.blue, unselectedLabelColor: Colors.grey),
-      ),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            AppLocalizations.of(context)?.title ?? 'Image Transformer',
-          ),
-          actions: [
-            Switch(
-              value: _isBatchMode,
-              onChanged: (value) {
-                setState(() {
-                  _isBatchMode = value;
-                });
-              },
+    return Scaffold(
+      body: Column(
+        children: [
+          // Top toolbar (similar to professional software like Photoshop/VSCode)
+          Container(
+            height: 40,
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surfaceVariant,
+              border: Border(
+                bottom: BorderSide(
+                  color: Theme.of(context).dividerColor,
+                  width: 1,
+                ),
+              ),
             ),
-            Text(AppLocalizations.of(context)?.batchMode ?? 'Batch Mode'),
-            IconButton(
-              icon: const Icon(Icons.settings),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SettingsPage()),
-                );
-              },
-            ),
-          ],
-        ),
-        body: _isBatchMode
-            ? const BatchProcessor()
-            : Row(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Row(
                 children: [
-                  // Sidebar panel (left)
-                  SizedBox(width: 300, child: const SidebarPanel()),
+                  // Logo/icon area
+                  Container(
+                    padding: const EdgeInsets.all(4),
+                    child: const Icon(
+                      Icons.photo_filter,
+                      size: 20,
+                      color: Color(0xFF007ACC),
+                    ),
+                  ),
 
-                  // Vertical divider
-                  Container(width: 1, color: Theme.of(context).dividerColor),
+                  const SizedBox(width: 8),
 
-                  // Main content area (center)
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Toolbar
-                          Container(
-                            height: 50,
-                            margin: const EdgeInsets.only(bottom: 8.0),
-                            child: Row(
-                              children: [
-                                ElevatedButton.icon(
-                                  icon: const Icon(Icons.folder_open),
-                                  label: const Text('Import Image'),
-                                  onPressed: () async {
-                                    final imagePath =
-                                        await FileService.pickSingleImage();
-                                    if (imagePath != null) {
-                                      Provider.of<
-                                            ImageTransformProvider.ImageProvider
-                                          >(context, listen: false)
-                                          .setSelectedImage(imagePath);
-                                    }
-                                  },
-                                ),
-                                const SizedBox(width: 8),
-                                ElevatedButton.icon(
-                                  icon: const Icon(Icons.save),
-                                  label: const Text('Apply Preset'),
-                                  onPressed: () {
-                                    // Apply preset functionality will be implemented later
-                                  },
-                                ),
-                                const SizedBox(width: 8),
-                                ElevatedButton.icon(
-                                  icon: const Icon(Icons.download),
-                                  label: const Text('Export'),
-                                  onPressed: () async {
-                                    if (imageProvider.selectedImagePath !=
-                                        null) {
-                                      // Show dialog to select output directory
-                                      String? outputDir =
-                                          await FileService.pickSingleImage();
-                                      if (outputDir != null) {
-                                        String outputFileName = imageProvider
-                                            .selectedImagePath!
-                                            .split('/')
-                                            .last;
-                                        String outputPath =
-                                            outputDir + '/' + outputFileName;
+                  // File operations
+                  IconButton(
+                    icon: const Icon(Icons.upload, size: 16),
+                    tooltip: localizations.importImage,
+                    onPressed: () async {
+                      final path = await FileService.pickSingleImage();
+                      if (path != null) {
+                        imageProvider.setSelectedImage(path);
+                      }
+                    },
+                    style: ButtonStyle(
+                      padding: WidgetStateProperty.all(const EdgeInsets.all(6)),
+                    ),
+                  ),
 
-                                        try {
-                                          String processedImagePath =
-                                              await imageProvider.processImage(
-                                                outputPath,
-                                              );
-                                          imageProvider.setProcessedImage(
-                                            processedImagePath,
-                                          );
-                                          ScaffoldMessenger.of(
-                                            context,
-                                          ).showSnackBar(
-                                            const SnackBar(
-                                              content: Text(
-                                                'Image processed successfully!',
-                                              ),
-                                            ),
-                                          );
-                                        } catch (e) {
-                                          ScaffoldMessenger.of(
-                                            context,
-                                          ).showSnackBar(
-                                            SnackBar(
-                                              content: Text(
-                                                'Error processing image: $e',
-                                              ),
-                                            ),
-                                          );
-                                        }
-                                      }
-                                    }
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
+                  IconButton(
+                    icon: const Icon(Icons.download, size: 16),
+                    tooltip: localizations.export,
+                    onPressed: () {
+                      // Export functionality would go here
+                    },
+                    style: ButtonStyle(
+                      padding: WidgetStateProperty.all(const EdgeInsets.all(6)),
+                    ),
+                  ),
 
-                          // Preview area
-                          Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Theme.of(context).dividerColor,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: const ImagePreview(),
-                            ),
-                          ),
-                        ],
+                  const SizedBox(width: 8),
+
+                  // Separator
+                  Container(
+                    width: 1,
+                    height: 20,
+                    color: Theme.of(context).dividerColor,
+                  ),
+
+                  const SizedBox(width: 8),
+
+                  // Batch mode toggle
+                  Row(
+                    children: [
+                      Text(
+                        localizations.batchMode,
+                        style: Theme.of(context).textTheme.labelSmall,
+                      ),
+                      Switch(
+                        value: _isBatchMode,
+                        onChanged: (value) {
+                          setState(() {
+                            _isBatchMode = value;
+                          });
+                        },
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                    ],
+                  ),
+
+                  const Spacer(),
+
+                  // Navigation buttons
+                  if (_selectedIndex != 0 && !_showSettings) // Home button
+                    IconButton(
+                      icon: const Icon(Icons.home, size: 16),
+                      tooltip: localizations.title,
+                      onPressed: () {
+                        setState(() {
+                          _selectedIndex = 0;
+                          _showSettings = false;
+                        });
+                      },
+                      style: ButtonStyle(
+                        padding: WidgetStateProperty.all(
+                          const EdgeInsets.all(6),
+                        ),
+                      ),
+                    ),
+
+                  if (_selectedIndex != 1 && !_showSettings) // Preview button
+                    IconButton(
+                      icon: const Icon(Icons.photo, size: 16),
+                      tooltip: localizations.imagePreview,
+                      onPressed: () {
+                        setState(() {
+                          _selectedIndex = 1;
+                          _showSettings = false;
+                        });
+                      },
+                      style: ButtonStyle(
+                        padding: WidgetStateProperty.all(
+                          const EdgeInsets.all(6),
+                        ),
+                      ),
+                    ),
+
+                  if (_selectedIndex != 2 && !_showSettings) // Batch button
+                    IconButton(
+                      icon: const Icon(Icons.batch_prediction, size: 16),
+                      tooltip: localizations.batchMode,
+                      onPressed: () {
+                        setState(() {
+                          _selectedIndex = 2;
+                          _showSettings = false;
+                        });
+                      },
+                      style: ButtonStyle(
+                        padding: WidgetStateProperty.all(
+                          const EdgeInsets.all(6),
+                        ),
+                      ),
+                    ),
+
+                  if (!_showSettings) // Settings button
+                    IconButton(
+                      icon: const Icon(Icons.settings, size: 16),
+                      tooltip: localizations.settings,
+                      onPressed: () {
+                        setState(() {
+                          _showSettings = true;
+                        });
+                      },
+                      style: ButtonStyle(
+                        padding: WidgetStateProperty.all(
+                          const EdgeInsets.all(6),
+                        ),
+                      ),
+                    ),
+
+                  if (_showSettings) // Back button
+                    IconButton(
+                      icon: const Icon(Icons.arrow_back, size: 16),
+                      tooltip: 'Back',
+                      onPressed: () {
+                        setState(() {
+                          _showSettings = false;
+                        });
+                      },
+                      style: ButtonStyle(
+                        padding: WidgetStateProperty.all(
+                          const EdgeInsets.all(6),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ),
+
+          // Main content area
+          Expanded(
+            child: Row(
+              children: [
+                // Left sidebar - similar to professional software's tools panel
+                Container(
+                  width: 280,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).cardColor,
+                    border: Border(
+                      right: BorderSide(
+                        color: Theme.of(context).dividerColor,
+                        width: 1,
                       ),
                     ),
                   ),
-                ],
-              ),
+                  child: _showSettings
+                      ? const SettingsPage()
+                      : _selectedIndex == 2
+                      ? const BatchProcessor()
+                      : SidebarPanel(),
+                ),
+
+                // Main content area
+                Expanded(
+                  child: _showSettings
+                      ? const SizedBox.shrink()
+                      : _selectedIndex == 2
+                      ? const SizedBox.shrink()
+                      : ImagePreview(),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

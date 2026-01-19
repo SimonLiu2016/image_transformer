@@ -12,139 +12,108 @@ class ImagePreview extends StatefulWidget {
 }
 
 class _ImagePreviewState extends State<ImagePreview> {
-  bool _showComparison = false;
-  double _sliderPosition = 0.5; // For split view
+  bool _isComparisonView = false;
+  bool _showOriginal = true;
+  bool _showProcessed = true;
 
   @override
   Widget build(BuildContext context) {
     final imageProvider = Provider.of<ImageTransformProvider.ImageProvider>(
       context,
     );
+    final localizations = AppLocalizations.of(context)!;
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      color: Theme.of(context).scaffoldBackgroundColor,
       child: Column(
         children: [
-          // Preview header
-          Row(
-            children: [
-              Text(
-                AppLocalizations.of(context)?.imagePreview ?? 'Image Preview',
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+          // Preview header with controls
+          Container(
+            height: 36,
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surfaceVariant,
+              border: Border(
+                bottom: BorderSide(
+                  color: Theme.of(context).dividerColor,
+                  width: 1,
                 ),
               ),
-              const Spacer(),
-              // Toggle comparison view
-              Switch(
-                value: _showComparison,
-                onChanged: (value) {
-                  setState(() {
-                    _showComparison = value;
-                  });
-                },
-              ),
-              const Text('Compare'),
-              IconButton(
-                icon: const Icon(Icons.refresh),
-                onPressed: () {
-                  // Refresh preview
-                },
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
+            ),
+            child: Row(
+              children: [
+                Text(
+                  localizations.imagePreview,
+                  style: Theme.of(
+                    context,
+                  ).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w600),
+                ),
+                const Spacer(),
 
-          // Preview area
+                // Comparison toggle
+                Row(
+                  children: [
+                    Text(
+                      localizations.compare,
+                      style: Theme.of(context).textTheme.labelSmall,
+                    ),
+                    Switch(
+                      value: _isComparisonView,
+                      onChanged: (value) {
+                        setState(() {
+                          _isComparisonView = value;
+                        });
+                      },
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
+                  ],
+                ),
+
+                // Reset button
+                TextButton(
+                  child: const Text('Reset', style: TextStyle(fontSize: 12)),
+                  onPressed: () {
+                    imageProvider.reset();
+                  },
+                ),
+              ],
+            ),
+          ),
+
           Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Theme.of(context).dividerColor),
-                borderRadius: BorderRadius.circular(8),
-                color: Theme.of(context).canvasColor,
-              ),
-              child: imageProvider.selectedImagePath != null
-                  ? _buildPreviewArea(imageProvider)
-                  : const Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.image, size: 64, color: Colors.grey),
-                          SizedBox(height: 16),
-                          Text(
-                            'Drag & drop an image here or click Import Image',
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                        ],
-                      ),
-                    ),
-            ),
+            child: _isComparisonView
+                ? _buildComparisonView(imageProvider)
+                : _buildSingleView(imageProvider),
           ),
-          const SizedBox(height: 16),
-
-          // Image info
-          if (imageProvider.selectedImagePath != null)
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                border: Border.all(color: Theme.of(context).dividerColor),
-                borderRadius: BorderRadius.circular(4),
-              ),
-              child: Row(
-                children: [
-                  const Icon(Icons.info, size: 16),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      'Original: ${imageProvider.selectedImagePath!.split('/').last}',
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ],
-              ),
-            ),
         ],
       ),
     );
   }
 
-  Widget _buildPreviewArea(ImageTransformProvider.ImageProvider imageProvider) {
-    if (_showComparison && imageProvider.processedImagePath != null) {
-      // Comparison view - show before and after
-      return _buildComparisonView(imageProvider);
-    } else if (_showComparison) {
-      // Show message if no processed image available for comparison
-      return const Center(
-        child: Text('Process an image first to see comparison'),
-      );
-    } else {
-      // Single image view
-      return InteractiveViewer(
-        child: Image.file(
-          fit: BoxFit.contain,
-          alignment: Alignment.center,
-          File(imageProvider.selectedImagePath!),
-        ),
-      );
-    }
-  }
-
-  Widget _buildComparisonView(
-    ImageTransformProvider.ImageProvider imageProvider,
-  ) {
-    // Create a tabbed view to switch between original and processed
+  Widget _buildSingleView(ImageTransformProvider.ImageProvider imageProvider) {
     return DefaultTabController(
       length: 2,
       child: Column(
         children: [
           Container(
-            constraints: const BoxConstraints.expand(height: 50),
+            height: 32,
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surfaceVariant,
+            ),
             child: TabBar(
+              indicatorSize: TabBarIndicatorSize.tab,
               tabs: [
-                Tab(text: AppLocalizations.of(context)?.original ?? 'Original'),
                 Tab(
-                  text: AppLocalizations.of(context)?.processed ?? 'Processed',
+                  child: Text(
+                    AppLocalizations.of(context)?.original ?? 'Original',
+                    style: Theme.of(context).textTheme.labelSmall,
+                  ),
+                ),
+                Tab(
+                  child: Text(
+                    AppLocalizations.of(context)?.processed ?? 'Processed',
+                    style: Theme.of(context).textTheme.labelSmall,
+                  ),
                 ),
               ],
             ),
@@ -152,28 +121,147 @@ class _ImagePreviewState extends State<ImagePreview> {
           Expanded(
             child: TabBarView(
               children: [
-                // Original image
-                InteractiveViewer(
-                  child: Image.file(
-                    fit: BoxFit.contain,
-                    alignment: Alignment.center,
-                    File(imageProvider.selectedImagePath!),
-                  ),
-                ),
-                // Processed image
-                imageProvider.processedImagePath != null
-                    ? InteractiveViewer(
-                        child: Image.file(
-                          fit: BoxFit.contain,
-                          alignment: Alignment.center,
-                          File(imageProvider.processedImagePath!),
-                        ),
-                      )
-                    : const Center(child: Text('No processed image available')),
+                _buildImageView(imageProvider.selectedImagePath),
+                _buildImageView(imageProvider.processedImagePath),
               ],
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildComparisonView(
+    ImageTransformProvider.ImageProvider imageProvider,
+  ) {
+    return Row(
+      children: [
+        // Original image panel
+        Expanded(
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border(
+                right: BorderSide(
+                  color: Theme.of(context).dividerColor,
+                  width: 1,
+                ),
+              ),
+            ),
+            child: Column(
+              children: [
+                Container(
+                  height: 32,
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.surfaceVariant,
+                  ),
+                  child: Row(
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)?.original ?? 'Original',
+                        style: Theme.of(context).textTheme.labelSmall,
+                      ),
+                      const Spacer(),
+                      Checkbox(
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        value: _showOriginal,
+                        onChanged: (value) {
+                          setState(() {
+                            _showOriginal = value!;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                if (_showOriginal)
+                  Expanded(
+                    child: _buildImageView(imageProvider.selectedImagePath),
+                  ),
+              ],
+            ),
+          ),
+        ),
+
+        // Processed image panel
+        Expanded(
+          child: Column(
+            children: [
+              Container(
+                height: 32,
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.surfaceVariant,
+                ),
+                child: Row(
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)?.processed ?? 'Processed',
+                      style: Theme.of(context).textTheme.labelSmall,
+                    ),
+                    const Spacer(),
+                    Checkbox(
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      value: _showProcessed,
+                      onChanged: (value) {
+                        setState(() {
+                          _showProcessed = value!;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              if (_showProcessed)
+                Expanded(
+                  child: _buildImageView(imageProvider.processedImagePath),
+                ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildImageView(String? imagePath) {
+    if (imagePath == null || !File(imagePath).existsSync()) {
+      return Container(
+        color: Theme.of(context).colorScheme.surface,
+        child: const Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.image_not_supported, size: 48, color: Colors.grey),
+              SizedBox(height: 8),
+              Text(
+                'No image to display',
+                style: TextStyle(color: Colors.grey, fontSize: 12),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return Container(
+      color: Theme.of(context).colorScheme.surface,
+      child: InteractiveViewer(
+        clipBehavior: Clip.none,
+        boundaryMargin: const EdgeInsets.all(20.0),
+        minScale: 0.1,
+        maxScale: 5.0,
+        child: Image.file(
+          File(imagePath),
+          fit: BoxFit.contain,
+          errorBuilder: (context, error, stackTrace) {
+            return Container(
+              color: Theme.of(context).colorScheme.surface,
+              child: const Center(
+                child: Icon(Icons.broken_image, size: 48, color: Colors.grey),
+              ),
+            );
+          },
+        ),
       ),
     );
   }

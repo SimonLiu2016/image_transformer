@@ -5,121 +5,97 @@ import '../l10n/app_localizations.dart';
 import 'parameter_controls.dart';
 import 'preset_manager.dart';
 
-class SidebarPanel extends StatelessWidget {
+class SidebarPanel extends StatefulWidget {
   const SidebarPanel({super.key});
+
+  @override
+  State<SidebarPanel> createState() => _SidebarPanelState();
+}
+
+class _SidebarPanelState extends State<SidebarPanel>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Theme.of(context).cardColor,
-      child: DefaultTabController(
-        length: 2,
-        child: Column(
-          children: [
-            TabBar(
-              tabs: [
-                Tab(text: 'Parameters'),
-                Tab(text: 'Presets'),
-              ],
-            ),
-            Expanded(
-              child: TabBarView(
-                children: [
-                  // Parameters tab
-                  SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Format Conversion',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          DropdownButtonFormField<String>(
-                            value: 'png',
-                            items: ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'webp']
-                                .map(
-                                  (format) => DropdownMenuItem(
-                                    value: format,
-                                    child: Text(format.toUpperCase()),
-                                  ),
-                                )
-                                .toList(),
-                            onChanged: (value) {},
-                            decoration: const InputDecoration(
-                              labelText: 'Output Format',
-                              border: OutlineInputBorder(),
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-
-                          // Size controls
-                          const Text(
-                            'Size Adjustment',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          TextFormField(
-                            decoration: const InputDecoration(
-                              labelText: 'Width',
-                              border: OutlineInputBorder(),
-                            ),
-                            keyboardType: TextInputType.number,
-                          ),
-                          const SizedBox(height: 8),
-                          TextFormField(
-                            decoration: const InputDecoration(
-                              labelText: 'Height',
-                              border: OutlineInputBorder(),
-                            ),
-                            keyboardType: TextInputType.number,
-                          ),
-                          const SizedBox(height: 16),
-
-                          // Quality control
-                          const Text(
-                            'Quality',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Slider(
-                            value: 100.0,
-                            min: 1.0,
-                            max: 100.0,
-                            label: '100%',
-                            onChanged: (value) {},
-                          ),
-
-                          const SizedBox(height: 16),
-
-                          // Parameter controls
-                          const ParameterControls(),
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  // Presets tab
-                  const Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: PresetManager(),
-                  ),
-                ],
+      child: Column(
+        children: [
+          // Tabs for Parameters and Presets
+          Container(
+            height: 36,
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surfaceVariant,
+              border: Border(
+                bottom: BorderSide(
+                  color: Theme.of(context).dividerColor,
+                  width: 1,
+                ),
               ),
             ),
-          ],
-        ),
+            child: TabBar(
+              controller: _tabController,
+              isScrollable: true,
+              labelPadding: const EdgeInsets.symmetric(horizontal: 16),
+              tabs: [
+                Tab(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.tune, size: 14),
+                      const SizedBox(width: 6),
+                      Text(
+                        'Adjustments',
+                        style: Theme.of(context).textTheme.labelSmall,
+                      ),
+                    ],
+                  ),
+                ),
+                Tab(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.bookmark, size: 14),
+                      const SizedBox(width: 6),
+                      Text(
+                        'Presets',
+                        style: Theme.of(context).textTheme.labelSmall,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                SingleChildScrollView(
+                  padding: const EdgeInsets.all(12),
+                  child: ParameterControls(),
+                ),
+                SingleChildScrollView(
+                  padding: const EdgeInsets.all(12),
+                  child: PresetManager(),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
