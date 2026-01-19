@@ -59,124 +59,119 @@ class PresetManager extends StatelessWidget {
 
         const SizedBox(height: 4),
 
-        // Preset list
-        Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              color: Theme.of(context).cardColor,
-              borderRadius: BorderRadius.circular(4),
-              border: Border.all(
-                color: Theme.of(context).dividerColor.withOpacity(0.5),
-                width: 0.8,
-              ),
+        // Preset list - removing Expanded and using a fixed height container
+        Container(
+          height: 300, // 设置一个固定高度，这样就不会与滚动视图冲突
+          decoration: BoxDecoration(
+            color: Theme.of(context).cardColor,
+            borderRadius: BorderRadius.circular(4),
+            border: Border.all(
+              color: Theme.of(context).dividerColor.withOpacity(0.5),
+              width: 0.8,
             ),
-            child: presetProvider.presets.isEmpty
-                ? Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.bookmark_border,
-                          size: 36,
-                          color: Colors.grey,
-                        ),
-                        SizedBox(height: 8),
-                        Text(
-                          localizations.noPresetsSaved,
-                          style: TextStyle(color: Colors.grey, fontSize: 12),
-                        ),
-                        Text(
-                          localizations.createPresetDescription,
-                          style: TextStyle(color: Colors.grey, fontSize: 10),
-                        ),
-                      ],
-                    ),
-                  )
-                : ListView.builder(
-                    itemCount: presetProvider.presets.length,
-                    itemBuilder: (context, index) {
-                      final preset = presetProvider.presets[index];
-                      return ListTile(
-                        title: Text(
-                          preset.name,
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
-                        subtitle: Text(
-                          'ID: ${preset.id.substring(0, 8)}...',
-                          style: const TextStyle(
-                            fontSize: 10,
-                            color: Colors.grey,
-                          ),
-                        ),
-                        leading: const Icon(
-                          Icons.bookmark_outline,
-                          size: 16,
-                          color: Colors.grey,
-                        ),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            IconButton(
-                              icon: const Icon(Icons.play_arrow, size: 14),
-                              tooltip: localizations.applyPresetTooltip,
-                              padding: EdgeInsets.zero,
-                              constraints: const BoxConstraints.tightFor(
-                                width: 28,
-                                height: 28,
-                              ),
-                              style: ButtonStyle(
-                                visualDensity: VisualDensity.compact,
-                              ),
-                              onPressed: () {
-                                presetProvider.selectPreset(preset.id);
-                                // Apply the preset to the image provider
-                                final imageProvider =
-                                    Provider.of<
-                                      ImageTransformProvider.ImageProvider
-                                    >(context, listen: false);
-                                presetProvider.applyPresetToImageProvider(
-                                  imageProvider,
-                                );
-                              },
-                            ),
-                            IconButton(
-                              icon: const Icon(Icons.delete, size: 14),
-                              tooltip: localizations.deletePresetTooltip,
-                              padding: EdgeInsets.zero,
-                              constraints: const BoxConstraints.tightFor(
-                                width: 28,
-                                height: 28,
-                              ),
-                              style: ButtonStyle(
-                                visualDensity: VisualDensity.compact,
-                              ),
-                              onPressed: () {
-                                presetProvider.deletePreset(preset.id);
-                              },
-                            ),
-                          ],
-                        ),
-                        onTap: () {
-                          presetProvider.selectPreset(preset.id);
-                          // Apply the preset to the image provider
-                          final imageProvider =
-                              Provider.of<ImageTransformProvider.ImageProvider>(
-                                context,
-                                listen: false,
-                              );
-                          presetProvider.applyPresetToImageProvider(
-                            imageProvider,
-                          );
-                        },
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        style: ListTileStyle.list,
-                        dense: true,
-                      );
-                    },
-                  ),
           ),
+          child: presetProvider.presets.isEmpty
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.bookmark_border, size: 36, color: Colors.grey),
+                      SizedBox(height: 8),
+                      Text(
+                        localizations.noPresetsSaved,
+                        style: TextStyle(color: Colors.grey, fontSize: 12),
+                      ),
+                      Text(
+                        localizations.createPresetDescription,
+                        style: TextStyle(color: Colors.grey, fontSize: 10),
+                      ),
+                    ],
+                  ),
+                )
+              : ListView.builder(
+                  itemCount: presetProvider.presets.length,
+                  itemBuilder: (context, index) {
+                    final preset = presetProvider.presets[index];
+                    return ListTile(
+                      title: Text(
+                        preset.name,
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                      subtitle: Text(
+                        'ID: ${preset.id.substring(0, 8)}...',
+                        style: const TextStyle(
+                          fontSize: 10,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      leading: const Icon(
+                        Icons.bookmark_outline,
+                        size: 16,
+                        color: Colors.grey,
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.play_arrow, size: 14),
+                            tooltip: localizations.applyPresetTooltip,
+                            padding: EdgeInsets.zero,
+                            constraints: const BoxConstraints.tightFor(
+                              width: 28,
+                              height: 28,
+                            ),
+                            style: ButtonStyle(
+                              visualDensity: VisualDensity.compact,
+                            ),
+                            onPressed: () {
+                              presetProvider.selectPreset(preset.id);
+                              // Apply the preset to the image provider
+                              final imageProvider =
+                                  Provider.of<
+                                    ImageTransformProvider.ImageProvider
+                                  >(context, listen: false);
+                              presetProvider.applyPresetToImageProvider(
+                                imageProvider,
+                              );
+                            },
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.delete, size: 14),
+                            tooltip: localizations.deletePresetTooltip,
+                            padding: EdgeInsets.zero,
+                            constraints: const BoxConstraints.tightFor(
+                              width: 28,
+                              height: 28,
+                            ),
+                            style: ButtonStyle(
+                              visualDensity: VisualDensity.compact,
+                            ),
+                            onPressed: () {
+                              presetProvider.deletePreset(preset.id);
+                            },
+                          ),
+                        ],
+                      ),
+                      onTap: () {
+                        presetProvider.selectPreset(preset.id);
+                        // Apply the preset to the image provider
+                        final imageProvider =
+                            Provider.of<ImageTransformProvider.ImageProvider>(
+                              context,
+                              listen: false,
+                            );
+                        presetProvider.applyPresetToImageProvider(
+                          imageProvider,
+                        );
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      style: ListTileStyle.list,
+                      dense: true,
+                    );
+                  },
+                ),
         ),
       ],
     );
