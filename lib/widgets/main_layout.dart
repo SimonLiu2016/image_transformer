@@ -32,11 +32,11 @@ class _MainLayoutState extends State<MainLayout> {
     return Scaffold(
       body: Column(
         children: [
-          // Top toolbar (similar to professional software like Photoshop/VSCode)
+          // Top toolbar (similar to Pixelmator Pro)
           Container(
             height: 40,
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surfaceVariant,
+              color: Theme.of(context).colorScheme.surface,
               border: Border(
                 bottom: BorderSide(
                   color: Theme.of(context).dividerColor,
@@ -45,24 +45,30 @@ class _MainLayoutState extends State<MainLayout> {
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(80.0, 0, 8.0, 0), // Increased left padding to avoid overlapping with system window controls
+              padding: const EdgeInsets.fromLTRB(
+                80.0,
+                0,
+                8.0,
+                0,
+              ), // Increased left padding to avoid overlapping with system window controls
               child: Row(
                 children: [
                   // Logo/icon area
                   Container(
                     padding: const EdgeInsets.all(4),
                     child: const Icon(
-                      Icons.photo_filter,
-                      size: 20,
-                      color: Color(0xFF007ACC),
+                      Icons.brush,
+                      size: 16,
+                      color: Color(0xFF007AFF),
                     ),
                   ),
+                  const SizedBox(width: 2),
 
                   const SizedBox(width: 8),
 
                   // File operations
                   IconButton(
-                    icon: const Icon(Icons.upload, size: 16),
+                    icon: const Icon(Icons.insert_photo_outlined, size: 16),
                     tooltip: localizations.importImage,
                     onPressed: () async {
                       final path = await FileService.pickSingleImage();
@@ -72,17 +78,43 @@ class _MainLayoutState extends State<MainLayout> {
                     },
                     style: ButtonStyle(
                       padding: WidgetStateProperty.all(const EdgeInsets.all(6)),
+                      backgroundColor: WidgetStateProperty.resolveWith<Color?>((
+                        Set<WidgetState> states,
+                      ) {
+                        if (states.contains(WidgetState.hovered)) {
+                          return Theme.of(context).dividerColor;
+                        }
+                        return Colors.transparent;
+                      }),
+                      shape: WidgetStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4.0),
+                        ),
+                      ),
                     ),
                   ),
 
                   IconButton(
-                    icon: const Icon(Icons.download, size: 16),
+                    icon: const Icon(Icons.save_outlined, size: 16),
                     tooltip: localizations.export,
                     onPressed: () {
                       // Export functionality would go here
                     },
                     style: ButtonStyle(
                       padding: WidgetStateProperty.all(const EdgeInsets.all(6)),
+                      backgroundColor: WidgetStateProperty.resolveWith<Color?>((
+                        Set<WidgetState> states,
+                      ) {
+                        if (states.contains(WidgetState.hovered)) {
+                          return Theme.of(context).dividerColor;
+                        }
+                        return Colors.transparent;
+                      }),
+                      shape: WidgetStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4.0),
+                        ),
+                      ),
                     ),
                   ),
 
@@ -133,6 +165,20 @@ class _MainLayoutState extends State<MainLayout> {
                         padding: WidgetStateProperty.all(
                           const EdgeInsets.all(6),
                         ),
+                        backgroundColor:
+                            WidgetStateProperty.resolveWith<Color?>((
+                              Set<WidgetState> states,
+                            ) {
+                              if (states.contains(WidgetState.hovered)) {
+                                return Theme.of(context).dividerColor;
+                              }
+                              return Colors.transparent;
+                            }),
+                        shape: WidgetStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4.0),
+                          ),
+                        ),
                       ),
                     ),
 
@@ -149,6 +195,20 @@ class _MainLayoutState extends State<MainLayout> {
                       style: ButtonStyle(
                         padding: WidgetStateProperty.all(
                           const EdgeInsets.all(6),
+                        ),
+                        backgroundColor:
+                            WidgetStateProperty.resolveWith<Color?>((
+                              Set<WidgetState> states,
+                            ) {
+                              if (states.contains(WidgetState.hovered)) {
+                                return Theme.of(context).dividerColor;
+                              }
+                              return Colors.transparent;
+                            }),
+                        shape: WidgetStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4.0),
+                          ),
                         ),
                       ),
                     ),
@@ -167,12 +227,26 @@ class _MainLayoutState extends State<MainLayout> {
                         padding: WidgetStateProperty.all(
                           const EdgeInsets.all(6),
                         ),
+                        backgroundColor:
+                            WidgetStateProperty.resolveWith<Color?>((
+                              Set<WidgetState> states,
+                            ) {
+                              if (states.contains(WidgetState.hovered)) {
+                                return Theme.of(context).dividerColor;
+                              }
+                              return Colors.transparent;
+                            }),
+                        shape: WidgetStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4.0),
+                          ),
+                        ),
                       ),
                     ),
 
                   if (!_showSettings) // Settings button
                     IconButton(
-                      icon: const Icon(Icons.settings, size: 16),
+                      icon: const Icon(Icons.settings_outlined, size: 16),
                       tooltip: localizations.settings,
                       onPressed: () {
                         setState(() {
@@ -183,12 +257,26 @@ class _MainLayoutState extends State<MainLayout> {
                         padding: WidgetStateProperty.all(
                           const EdgeInsets.all(6),
                         ),
+                        backgroundColor:
+                            WidgetStateProperty.resolveWith<Color?>((
+                              Set<WidgetState> states,
+                            ) {
+                              if (states.contains(WidgetState.hovered)) {
+                                return Theme.of(context).dividerColor;
+                              }
+                              return Colors.transparent;
+                            }),
+                        shape: WidgetStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4.0),
+                          ),
+                        ),
                       ),
                     ),
 
                   if (_showSettings) // Back button
                     IconButton(
-                      icon: const Icon(Icons.arrow_back, size: 16),
+                      icon: const Icon(Icons.arrow_back_outlined, size: 16),
                       tooltip: 'Back',
                       onPressed: () {
                         setState(() {
@@ -198,6 +286,20 @@ class _MainLayoutState extends State<MainLayout> {
                       style: ButtonStyle(
                         padding: WidgetStateProperty.all(
                           const EdgeInsets.all(6),
+                        ),
+                        backgroundColor:
+                            WidgetStateProperty.resolveWith<Color?>((
+                              Set<WidgetState> states,
+                            ) {
+                              if (states.contains(WidgetState.hovered)) {
+                                return Theme.of(context).dividerColor;
+                              }
+                              return Colors.transparent;
+                            }),
+                        shape: WidgetStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4.0),
+                          ),
                         ),
                       ),
                     ),

@@ -33,8 +33,7 @@ class ParameterControls extends StatelessWidget {
                 'FORMAT',
                 style: TextStyle(
                   fontSize: 11,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 1.0,
+                  fontWeight: FontWeight.w500,
                   color: Colors.grey,
                 ),
               ),
@@ -54,12 +53,32 @@ class ParameterControls extends StatelessWidget {
                     imageProvider.setOutputFormat(value);
                   }
                 },
-                decoration: const InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(
                     horizontal: 8,
                     vertical: 8,
                   ),
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).dividerColor,
+                      width: 1,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).dividerColor,
+                      width: 1,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).colorScheme.primary,
+                      width: 1,
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -85,8 +104,7 @@ class ParameterControls extends StatelessWidget {
                 'SIZE',
                 style: TextStyle(
                   fontSize: 11,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 1.0,
+                  fontWeight: FontWeight.w500,
                   color: Colors.grey,
                 ),
               ),
@@ -96,13 +114,33 @@ class ParameterControls extends StatelessWidget {
                   Expanded(
                     flex: 1,
                     child: TextFormField(
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: 'W',
-                        contentPadding: EdgeInsets.symmetric(
+                        contentPadding: const EdgeInsets.symmetric(
                           horizontal: 8,
                           vertical: 8,
                         ),
-                        border: OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(4),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).dividerColor,
+                            width: 1,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(4),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).dividerColor,
+                            width: 1,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(4),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).colorScheme.primary,
+                            width: 1,
+                          ),
+                        ),
                       ),
                       keyboardType: TextInputType.number,
                       initialValue: imageProvider.width > 0
@@ -124,13 +162,33 @@ class ParameterControls extends StatelessWidget {
                   Expanded(
                     flex: 1,
                     child: TextFormField(
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: 'H',
-                        contentPadding: EdgeInsets.symmetric(
+                        contentPadding: const EdgeInsets.symmetric(
                           horizontal: 8,
                           vertical: 8,
                         ),
-                        border: OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(4),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).dividerColor,
+                            width: 1,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(4),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).dividerColor,
+                            width: 1,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(4),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).colorScheme.primary,
+                            width: 1,
+                          ),
+                        ),
                       ),
                       keyboardType: TextInputType.number,
                       initialValue: imageProvider.height > 0
@@ -171,8 +229,7 @@ class ParameterControls extends StatelessWidget {
                 'QUALITY',
                 style: TextStyle(
                   fontSize: 11,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 1.0,
+                  fontWeight: FontWeight.w500,
                   color: Colors.grey,
                 ),
               ),
@@ -215,8 +272,7 @@ class ParameterControls extends StatelessWidget {
                 'COLOR ADJUSTMENTS',
                 style: TextStyle(
                   fontSize: 11,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 1.0,
+                  fontWeight: FontWeight.w500,
                   color: Colors.grey,
                 ),
               ),
@@ -313,8 +369,7 @@ class ParameterControls extends StatelessWidget {
                 'TRANSFORM',
                 style: TextStyle(
                   fontSize: 11,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 1.0,
+                  fontWeight: FontWeight.w500,
                   color: Colors.grey,
                 ),
               ),

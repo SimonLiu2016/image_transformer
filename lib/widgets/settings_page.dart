@@ -22,12 +22,12 @@ class SettingsPage extends StatelessWidget {
         child: ListView(
           children: [
             // Theme settings
-            Card(
-              elevation: 0,
-              shape: RoundedRectangleBorder(
+            Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(6),
-                side: BorderSide(
-                  color: Theme.of(context).dividerColor,
+                border: Border.all(
+                  color: Theme.of(context).dividerColor.withOpacity(0.5),
                   width: 0.8,
                 ),
               ),
@@ -38,12 +38,12 @@ class SettingsPage extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        const Icon(Icons.palette, size: 18),
+                        const Icon(Icons.palette, size: 16),
                         const SizedBox(width: 8),
                         Text(
                           localizations.appearance,
                           style: Theme.of(context).textTheme.labelLarge
-                              ?.copyWith(fontWeight: FontWeight.w600),
+                              ?.copyWith(fontWeight: FontWeight.w500),
                         ),
                       ],
                     ),
@@ -57,7 +57,7 @@ class SettingsPage extends StatelessWidget {
                       onChanged: (value) {
                         appProvider.toggleTheme();
                       },
-                      secondary: const Icon(Icons.dark_mode, size: 18),
+                      secondary: const Icon(Icons.dark_mode, size: 16),
                       contentPadding: const EdgeInsets.symmetric(horizontal: 0),
                       dense: true,
                     ),
@@ -68,12 +68,12 @@ class SettingsPage extends StatelessWidget {
             const SizedBox(height: 12),
 
             // Default parameters
-            Card(
-              elevation: 0,
-              shape: RoundedRectangleBorder(
+            Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(6),
-                side: BorderSide(
-                  color: Theme.of(context).dividerColor,
+                border: Border.all(
+                  color: Theme.of(context).dividerColor.withOpacity(0.5),
                   width: 0.8,
                 ),
               ),
@@ -84,12 +84,12 @@ class SettingsPage extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        const Icon(Icons.settings, size: 18),
+                        const Icon(Icons.settings, size: 16),
                         const SizedBox(width: 8),
                         Text(
                           localizations.defaultParameters,
                           style: Theme.of(context).textTheme.labelLarge
-                              ?.copyWith(fontWeight: FontWeight.w600),
+                              ?.copyWith(fontWeight: FontWeight.w500),
                         ),
                       ],
                     ),
@@ -103,12 +103,32 @@ class SettingsPage extends StatelessWidget {
                     const SizedBox(height: 6),
                     DropdownButtonFormField<String>(
                       value: appProvider.defaultOutputFormat,
-                      decoration: const InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(
                           horizontal: 8,
                           vertical: 8,
                         ),
-                        border: OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(4),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).dividerColor,
+                            width: 1,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(4),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).dividerColor,
+                            width: 1,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(4),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).colorScheme.primary,
+                            width: 1,
+                          ),
+                        ),
                       ),
                       items: ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'webp']
                           .map(
@@ -157,7 +177,7 @@ class SettingsPage extends StatelessWidget {
                       onChanged: (value) {
                         appProvider.setAutoSavePreset(value);
                       },
-                      secondary: const Icon(Icons.bookmark, size: 18),
+                      secondary: const Icon(Icons.bookmark, size: 16),
                       contentPadding: const EdgeInsets.symmetric(horizontal: 0),
                       dense: true,
                     ),
@@ -168,12 +188,12 @@ class SettingsPage extends StatelessWidget {
             const SizedBox(height: 12),
 
             // About section
-            Card(
-              elevation: 0,
-              shape: RoundedRectangleBorder(
+            Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(6),
-                side: BorderSide(
-                  color: Theme.of(context).dividerColor,
+                border: Border.all(
+                  color: Theme.of(context).dividerColor.withOpacity(0.5),
                   width: 0.8,
                 ),
               ),
@@ -184,12 +204,12 @@ class SettingsPage extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        const Icon(Icons.info, size: 18),
+                        const Icon(Icons.info, size: 16),
                         const SizedBox(width: 8),
                         Text(
                           localizations.about,
                           style: Theme.of(context).textTheme.labelLarge
-                              ?.copyWith(fontWeight: FontWeight.w600),
+                              ?.copyWith(fontWeight: FontWeight.w500),
                         ),
                       ],
                     ),

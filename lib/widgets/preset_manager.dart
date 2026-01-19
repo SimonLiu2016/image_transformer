@@ -22,8 +22,7 @@ class PresetManager extends StatelessWidget {
               Text(
                 'PRESETS',
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 1.0,
+                  fontWeight: FontWeight.w500,
                   color: Colors.grey,
                 ),
               ),
@@ -38,6 +37,16 @@ class PresetManager extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   ),
                   visualDensity: VisualDensity.compact,
+                  backgroundColor: WidgetStateProperty.resolveWith<Color?>((
+                    Set<WidgetState> states,
+                  ) {
+                    if (states.contains(WidgetState.hovered)) {
+                      return Theme.of(
+                        context,
+                      ).colorScheme.primary.withOpacity(0.8);
+                    }
+                    return Theme.of(context).colorScheme.primary;
+                  }),
                 ),
                 onPressed: () {
                   _showSavePresetDialog(context);
@@ -87,10 +96,6 @@ class PresetManager extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final preset = presetProvider.presets[index];
                       return ListTile(
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 2,
-                        ),
                         title: Text(
                           preset.name,
                           style: Theme.of(context).textTheme.bodySmall,
@@ -165,6 +170,7 @@ class PresetManager extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(4),
                         ),
+                        style: ListTileStyle.list,
                         dense: true,
                       );
                     },
@@ -192,10 +198,30 @@ class PresetManager extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   hintText: 'Enter preset name',
                   labelText: 'Preset Name',
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).dividerColor,
+                      width: 1,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).dividerColor,
+                      width: 1,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).colorScheme.primary,
+                      width: 1,
+                    ),
+                  ),
                 ),
                 onChanged: (value) {
                   presetName = value;

@@ -50,59 +50,108 @@ class ImageTransformerApp extends StatelessWidget {
             theme: ThemeData(
               useMaterial3: true,
               brightness: Brightness.light,
-              // Professional light theme similar to Photoshop/VSCode
+              // Pixelmator Pro style light theme
               colorScheme: const ColorScheme.light(
-                primary: Color(0xFF007ACC),
-                secondary: Color(0xFF3A3A3A),
-                surface: Color(0xFFF6F6F6),
-                background: Color(0xFFF6F6F6),
-                error: Color(0xFFE57373),
+                primary: Color(0xFF007AFF), // macOS system blue
+                secondary: Color(0xFF6B6B6B),
+                surface: Color(0xFFFAFAFA),
+                background: Color(0xFFFAFAFA),
+                error: Color(0xFFFF3B30),
                 onPrimary: Color(0xFFFFFFFF),
                 onSecondary: Color(0xFFFFFFFF),
                 onSurface: Color(0xFF1B1B1B),
                 onBackground: Color(0xFF1B1B1B),
-                onError: Color(0xFF000000),
+                onError: Color(0xFFFFFFFF),
               ),
-              dividerColor: const Color(0xFFD0D0D0),
-              scaffoldBackgroundColor: const Color(0xFFF6F6F6),
+              dividerColor: const Color(0xFFD1D1D1),
+              scaffoldBackgroundColor: const Color(0xFFFAFAFA),
               cardColor: const Color(0xFFFFFFFF),
+              textTheme: const TextTheme(
+                bodySmall: TextStyle(fontSize: 11, fontFamily: '.SF UI Text'),
+                bodyMedium: TextStyle(fontSize: 12, fontFamily: '.SF UI Text'),
+                labelSmall: TextStyle(
+                  fontSize: 11,
+                  fontFamily: '.SF UI Text',
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
               appBarTheme: const AppBarTheme(
-                backgroundColor: Color(0xFFE9E9E9),
+                backgroundColor: Colors.transparent,
                 foregroundColor: Color(0xFF1B1B1B),
                 elevation: 0,
               ),
               tabBarTheme: const TabBarThemeData(
-                labelColor: Color(0xFF007ACC),
-                unselectedLabelColor: Color(0xFF6B6B6B),
+                labelColor: Color(0xFF007AFF),
+                unselectedLabelColor: Color(0xFF8E8E93),
+              ),
+              inputDecorationTheme: const InputDecorationTheme(
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFFD1D1D1), width: 1),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFFD1D1D1), width: 1),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFF007AFF), width: 1),
+                ),
               ),
             ),
             darkTheme: ThemeData(
               useMaterial3: true,
               brightness: Brightness.dark,
-              // Professional dark theme similar to Photoshop/VSCode
+              // Pixelmator Pro style dark theme
               colorScheme: const ColorScheme.dark(
-                primary: Color(0xFF007ACC),
-                secondary: Color(0xFFCCCCCC),
-                surface: Color(0xFF2D2D30),
-                background: Color(0xFF252526),
-                error: Color(0xFFE57373),
+                primary: Color(0xFF007AFF), // macOS system blue
+                secondary: Color(0xFFAAAAAA),
+                surface: Color(0xFF1C1C1E), // Match Pixelmator Pro dark theme
+                background: Color(0xFF1C1C1E),
+                error: Color(0xFFFF453A),
                 onPrimary: Color(0xFFFFFFFF),
                 onSecondary: Color(0xFF000000),
-                onSurface: Color(0xFFFFFFFF),
-                onBackground: Color(0xFFFFFFFF),
-                onError: Color(0xFF000000),
+                onSurface: Color(0xFFDADADA),
+                onBackground: Color(0xFFDADADA),
+                onError: Color(0xFFFFFFFF),
               ),
-              dividerColor: const Color(0xFF454545),
-              scaffoldBackgroundColor: const Color(0xFF252526),
-              cardColor: const Color(0xFF2D2D30),
+              dividerColor: const Color(0xFF48484A),
+              scaffoldBackgroundColor: const Color(0xFF1C1C1E),
+              cardColor: const Color(0xFF2C2C2E),
+              textTheme: const TextTheme(
+                bodySmall: TextStyle(
+                  fontSize: 11,
+                  fontFamily: '.SF UI Text',
+                  color: Color(0xFFDADADA),
+                ),
+                bodyMedium: TextStyle(
+                  fontSize: 12,
+                  fontFamily: '.SF UI Text',
+                  color: Color(0xFFDADADA),
+                ),
+                labelSmall: TextStyle(
+                  fontSize: 11,
+                  fontFamily: '.SF UI Text',
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xFFDADADA),
+                ),
+              ),
               appBarTheme: const AppBarTheme(
-                backgroundColor: Color(0xFF333333),
-                foregroundColor: Color(0xFFFFFFFF),
+                backgroundColor: Colors.transparent,
+                foregroundColor: Color(0xFFDADADA),
                 elevation: 0,
               ),
               tabBarTheme: const TabBarThemeData(
-                labelColor: Color(0xFF007ACC),
-                unselectedLabelColor: Color(0xFF9E9E9E),
+                labelColor: Color(0xFF007AFF),
+                unselectedLabelColor: Color(0xFF8E8E93),
+              ),
+              inputDecorationTheme: const InputDecorationTheme(
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFF48484A), width: 1),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFF48484A), width: 1),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFF007AFF), width: 1),
+                ),
               ),
             ),
             themeMode: appProvider.isDarkMode

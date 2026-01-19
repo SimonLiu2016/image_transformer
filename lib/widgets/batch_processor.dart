@@ -26,10 +26,10 @@ class _BatchProcessorState extends State<BatchProcessor> {
         children: [
           // Header
           Text(
-            'Batch Processor',
+            'BATCH PROCESSOR',
             style: Theme.of(
               context,
-            ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600),
+            ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w500),
           ),
           const SizedBox(height: 16),
 
@@ -48,6 +48,16 @@ class _BatchProcessorState extends State<BatchProcessor> {
                   padding: WidgetStateProperty.all(
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   ),
+                  backgroundColor: WidgetStateProperty.resolveWith<Color?>((
+                    Set<WidgetState> states,
+                  ) {
+                    if (states.contains(WidgetState.hovered)) {
+                      return Theme.of(
+                        context,
+                      ).colorScheme.primary.withOpacity(0.8);
+                    }
+                    return Theme.of(context).colorScheme.primary;
+                  }),
                 ),
                 onPressed: () async {
                   final paths = await FileService.pickMultipleImages();
@@ -129,7 +139,7 @@ class _BatchProcessorState extends State<BatchProcessor> {
                     Text(
                       localizations.status,
                       style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w500,
                         fontSize: 12,
                       ),
                     ),
@@ -166,7 +176,7 @@ class _BatchProcessorState extends State<BatchProcessor> {
           Text(
             localizations.imagesToProcess,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w500,
               fontSize: 14,
             ),
           ),

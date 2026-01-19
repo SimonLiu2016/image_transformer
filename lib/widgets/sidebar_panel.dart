@@ -38,7 +38,7 @@ class _SidebarPanelState extends State<SidebarPanel>
           Container(
             height: 36,
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surfaceVariant,
+              color: Theme.of(context).cardColor,
               border: Border(
                 bottom: BorderSide(
                   color: Theme.of(context).dividerColor,
