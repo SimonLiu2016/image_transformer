@@ -66,6 +66,8 @@ class _MainLayoutState extends State<MainLayout> {
 
                   const SizedBox(width: 8),
 
+                  const Spacer(),
+
                   // File operations
                   IconButton(
                     icon: const Icon(Icons.insert_photo_outlined, size: 16),
@@ -78,9 +80,7 @@ class _MainLayoutState extends State<MainLayout> {
                     },
                     style: ButtonStyle(
                       padding: WidgetStateProperty.all(const EdgeInsets.all(6)),
-                      backgroundColor: WidgetStateProperty.resolveWith<Color?>((
-                        Set<WidgetState> states,
-                      ) {
+                      backgroundColor: WidgetStateProperty.resolveWith<Color?>((Set<WidgetState> states) {
                         if (states.contains(WidgetState.hovered)) {
                           return Theme.of(context).dividerColor;
                         }
@@ -102,9 +102,7 @@ class _MainLayoutState extends State<MainLayout> {
                     },
                     style: ButtonStyle(
                       padding: WidgetStateProperty.all(const EdgeInsets.all(6)),
-                      backgroundColor: WidgetStateProperty.resolveWith<Color?>((
-                        Set<WidgetState> states,
-                      ) {
+                      backgroundColor: WidgetStateProperty.resolveWith<Color?>((Set<WidgetState> states) {
                         if (states.contains(WidgetState.hovered)) {
                           return Theme.of(context).dividerColor;
                         }
@@ -129,10 +127,6 @@ class _MainLayoutState extends State<MainLayout> {
 
                   const SizedBox(width: 8),
 
-
-
-                  const Spacer(),
-
                   // Navigation buttons
                   if (_selectedIndex != 0 && !_showSettings) // Home button
                     IconButton(
@@ -148,15 +142,12 @@ class _MainLayoutState extends State<MainLayout> {
                         padding: WidgetStateProperty.all(
                           const EdgeInsets.all(6),
                         ),
-                        backgroundColor:
-                            WidgetStateProperty.resolveWith<Color?>((
-                              Set<WidgetState> states,
-                            ) {
-                              if (states.contains(WidgetState.hovered)) {
-                                return Theme.of(context).dividerColor;
-                              }
-                              return Colors.transparent;
-                            }),
+                        backgroundColor: WidgetStateProperty.resolveWith<Color?>((Set<WidgetState> states) {
+                          if (states.contains(WidgetState.hovered)) {
+                            return Theme.of(context).dividerColor;
+                          }
+                          return Colors.transparent;
+                        }),
                         shape: WidgetStateProperty.all(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4.0),
@@ -179,15 +170,12 @@ class _MainLayoutState extends State<MainLayout> {
                         padding: WidgetStateProperty.all(
                           const EdgeInsets.all(6),
                         ),
-                        backgroundColor:
-                            WidgetStateProperty.resolveWith<Color?>((
-                              Set<WidgetState> states,
-                            ) {
-                              if (states.contains(WidgetState.hovered)) {
-                                return Theme.of(context).dividerColor;
-                              }
-                              return Colors.transparent;
-                            }),
+                        backgroundColor: WidgetStateProperty.resolveWith<Color?>((Set<WidgetState> states) {
+                          if (states.contains(WidgetState.hovered)) {
+                            return Theme.of(context).dividerColor;
+                          }
+                          return Colors.transparent;
+                        }),
                         shape: WidgetStateProperty.all(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4.0),
@@ -210,15 +198,12 @@ class _MainLayoutState extends State<MainLayout> {
                         padding: WidgetStateProperty.all(
                           const EdgeInsets.all(6),
                         ),
-                        backgroundColor:
-                            WidgetStateProperty.resolveWith<Color?>((
-                              Set<WidgetState> states,
-                            ) {
-                              if (states.contains(WidgetState.hovered)) {
-                                return Theme.of(context).dividerColor;
-                              }
-                              return Colors.transparent;
-                            }),
+                        backgroundColor: WidgetStateProperty.resolveWith<Color?>((Set<WidgetState> states) {
+                          if (states.contains(WidgetState.hovered)) {
+                            return Theme.of(context).dividerColor;
+                          }
+                          return Colors.transparent;
+                        }),
                         shape: WidgetStateProperty.all(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4.0),
@@ -240,15 +225,12 @@ class _MainLayoutState extends State<MainLayout> {
                         padding: WidgetStateProperty.all(
                           const EdgeInsets.all(6),
                         ),
-                        backgroundColor:
-                            WidgetStateProperty.resolveWith<Color?>((
-                              Set<WidgetState> states,
-                            ) {
-                              if (states.contains(WidgetState.hovered)) {
-                                return Theme.of(context).dividerColor;
-                              }
-                              return Colors.transparent;
-                            }),
+                        backgroundColor: WidgetStateProperty.resolveWith<Color?>((Set<WidgetState> states) {
+                          if (states.contains(WidgetState.hovered)) {
+                            return Theme.of(context).dividerColor;
+                          }
+                          return Colors.transparent;
+                        }),
                         shape: WidgetStateProperty.all(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4.0),
@@ -270,15 +252,12 @@ class _MainLayoutState extends State<MainLayout> {
                         padding: WidgetStateProperty.all(
                           const EdgeInsets.all(6),
                         ),
-                        backgroundColor:
-                            WidgetStateProperty.resolveWith<Color?>((
-                              Set<WidgetState> states,
-                            ) {
-                              if (states.contains(WidgetState.hovered)) {
-                                return Theme.of(context).dividerColor;
-                              }
-                              return Colors.transparent;
-                            }),
+                        backgroundColor: WidgetStateProperty.resolveWith<Color?>((Set<WidgetState> states) {
+                          if (states.contains(WidgetState.hovered)) {
+                            return Theme.of(context).dividerColor;
+                          }
+                          return Colors.transparent;
+                        }),
                         shape: WidgetStateProperty.all(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4.0),
