@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 class AppProvider extends ChangeNotifier {
-  bool _isDarkMode = false;
+  bool _isDarkMode = true; // Default to dark theme as requested
   String _defaultOutputFormat = 'png';
   int _defaultQuality = 90;
   bool _autoSavePreset = false;

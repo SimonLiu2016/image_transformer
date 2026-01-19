@@ -154,9 +154,7 @@ class ImageTransformerApp extends StatelessWidget {
                 ),
               ),
             ),
-            themeMode: appProvider.isDarkMode
-                ? ThemeMode.dark
-                : ThemeMode.light,
+            themeMode: ThemeMode.dark, // Default to dark theme as requested
             home: const MainLayout(),
           );
         },

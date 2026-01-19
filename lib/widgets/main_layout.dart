@@ -129,24 +129,7 @@ class _MainLayoutState extends State<MainLayout> {
 
                   const SizedBox(width: 8),
 
-                  // Batch mode toggle
-                  Row(
-                    children: [
-                      Text(
-                        localizations.batchMode,
-                        style: Theme.of(context).textTheme.labelSmall,
-                      ),
-                      Switch(
-                        value: _isBatchMode,
-                        onChanged: (value) {
-                          setState(() {
-                            _isBatchMode = value;
-                          });
-                        },
-                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      ),
-                    ],
-                  ),
+
 
                   const Spacer(),
 
@@ -312,33 +295,42 @@ class _MainLayoutState extends State<MainLayout> {
           Expanded(
             child: Row(
               children: [
-                // Left sidebar - similar to professional software's tools panel
-                Container(
-                  width: 280,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).cardColor,
-                    border: Border(
-                      right: BorderSide(
-                        color: Theme.of(context).dividerColor,
-                        width: 1,
-                      ),
-                    ),
-                  ),
-                  child: _showSettings
-                      ? const SettingsPage()
-                      : _selectedIndex == 2
-                      ? const BatchProcessor()
-                      : SidebarPanel(),
-                ),
-
                 // Main content area
                 Expanded(
-                  child: _showSettings
-                      ? const SizedBox.shrink()
-                      : _selectedIndex == 2
-                      ? const SizedBox.shrink()
-                      : ImagePreview(),
+                  child: IndexedStack(
+                    index: _showSettings ? 0 : (_selectedIndex == 2 ? 1 : 2),
+                    children: [
+                      // Settings page
+                      Container(
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                        child: const SettingsPage(),
+                      ),
+                      // Batch processor
+                      Container(
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                        child: const BatchProcessor(),
+                      ),
+                      // Image preview
+                      ImagePreview(),
+                    ],
+                  ),
                 ),
+
+                // Right sidebar - similar to professional software's properties panel
+                if (!_showSettings && _selectedIndex != 2)
+                  Container(
+                    width: 280,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      border: Border(
+                        left: BorderSide(
+                          color: Theme.of(context).dividerColor,
+                          width: 1,
+                        ),
+                      ),
+                    ),
+                    child: SidebarPanel(),
+                  ),
               ],
             ),
           ),
