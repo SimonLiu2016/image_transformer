@@ -225,35 +225,89 @@ class _MainLayoutState extends State<MainLayout> {
                       ),
                     ),
 
-                  if (!_showSettings) // Settings button
-                    IconButton(
-                      icon: const Icon(Icons.settings_outlined, size: 16),
-                      tooltip: localizations.settings,
-                      onPressed: () {
-                        setState(() {
-                          _showSettings = true;
-                        });
-                      },
-                      style: ButtonStyle(
-                        padding: WidgetStateProperty.all(
-                          const EdgeInsets.all(6),
-                        ),
-                        backgroundColor:
-                            WidgetStateProperty.resolveWith<Color?>((
-                              Set<WidgetState> states,
-                            ) {
-                              if (states.contains(WidgetState.hovered)) {
-                                return Theme.of(context).dividerColor;
-                              }
-                              return Colors.transparent;
-                            }),
-                        shape: WidgetStateProperty.all(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(4.0),
+                  // Language selector
+                  PopupMenuButton<String>(
+                    icon: const Icon(Icons.language, size: 16),
+                    tooltip: localizations.language,
+                    onSelected: (String languageCode) {
+                      appProvider.setLanguage(languageCode);
+                    },
+                    itemBuilder: (BuildContext context) {
+                      return [
+                        PopupMenuItem(
+                          value: 'en',
+                          child: Row(
+                            children: [
+                              const Icon(Icons.flag, size: 16),
+                              const SizedBox(width: 8),
+                              Text(
+                                'English',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: appProvider.currentLanguageCode == 'en'
+                                      ? Theme.of(context).colorScheme.primary
+                                      : Theme.of(
+                                          context,
+                                        ).textTheme.bodySmall?.color,
+                                ),
+                              ),
+                            ],
                           ),
+                        ),
+                        PopupMenuItem(
+                          value: 'zh',
+                          child: Row(
+                            children: [
+                              const Icon(Icons.flag, size: 16),
+                              const SizedBox(width: 8),
+                              Text(
+                                '中文',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: appProvider.currentLanguageCode == 'zh'
+                                      ? Theme.of(context).colorScheme.primary
+                                      : Theme.of(
+                                          context,
+                                        ).textTheme.bodySmall?.color,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ];
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(6)),
+                    ),
+                    offset: const Offset(0, 40),
+                  ),
+
+                  // Settings button
+                  IconButton(
+                    icon: const Icon(Icons.settings_outlined, size: 16),
+                    tooltip: localizations.settings,
+                    onPressed: () {
+                      setState(() {
+                        _showSettings = true;
+                      });
+                    },
+                    style: ButtonStyle(
+                      padding: WidgetStateProperty.all(const EdgeInsets.all(6)),
+                      backgroundColor: WidgetStateProperty.resolveWith<Color?>((
+                        Set<WidgetState> states,
+                      ) {
+                        if (states.contains(WidgetState.hovered)) {
+                          return Theme.of(context).dividerColor;
+                        }
+                        return Colors.transparent;
+                      }),
+                      shape: WidgetStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4.0),
                         ),
                       ),
                     ),
+                  ),
 
                   if (_showSettings) // Back button
                     IconButton(

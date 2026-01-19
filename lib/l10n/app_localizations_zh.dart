@@ -76,4 +76,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get imagesToProcess => '待处理图像';
+
+  @override
+  String get language => '语言';
 }

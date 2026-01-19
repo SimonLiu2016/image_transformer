@@ -114,5 +114,10 @@
   "@imagesToProcess": {
     "type": "text",
     "placeholders": {}
+  },
+  "language": "Language",
+  "@language": {
+    "type": "text",
+    "placeholders": {}
   }
 }

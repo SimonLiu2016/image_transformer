@@ -76,4 +76,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get imagesToProcess => 'Images to Process';
+
+  @override
+  String get language => 'Language';
 }
