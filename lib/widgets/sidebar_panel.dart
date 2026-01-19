@@ -58,7 +58,8 @@ class _SidebarPanelState extends State<SidebarPanel>
                       const Icon(Icons.tune, size: 14),
                       const SizedBox(width: 6),
                       Text(
-                        'Adjustments',
+                        AppLocalizations.of(context)?.adjustments ??
+                            'Adjustments',
                         style: Theme.of(context).textTheme.labelSmall,
                       ),
                     ],
@@ -71,7 +72,7 @@ class _SidebarPanelState extends State<SidebarPanel>
                       const Icon(Icons.bookmark, size: 14),
                       const SizedBox(width: 6),
                       Text(
-                        'Presets',
+                        AppLocalizations.of(context)?.presets ?? 'Presets',
                         style: Theme.of(context).textTheme.labelSmall,
                       ),
                     ],

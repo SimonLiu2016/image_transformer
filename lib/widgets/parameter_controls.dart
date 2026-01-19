@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/image_provider.dart' as ImageTransformProvider;
+import '../l10n/app_localizations.dart';
 
 class ParameterControls extends StatelessWidget {
   const ParameterControls({super.key});
@@ -10,6 +11,7 @@ class ParameterControls extends StatelessWidget {
     final imageProvider = Provider.of<ImageTransformProvider.ImageProvider>(
       context,
     );
+    final localizations = AppLocalizations.of(context)!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,8 +31,8 @@ class ParameterControls extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'FORMAT',
+              Text(
+                localizations.format,
                 style: TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.w500,
@@ -100,8 +102,8 @@ class ParameterControls extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'SIZE',
+              Text(
+                localizations.size,
                 style: TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.w500,
@@ -115,7 +117,7 @@ class ParameterControls extends StatelessWidget {
                     flex: 1,
                     child: TextFormField(
                       decoration: InputDecoration(
-                        labelText: 'W',
+                        labelText: localizations.width,
                         contentPadding: const EdgeInsets.symmetric(
                           horizontal: 8,
                           vertical: 8,
@@ -163,7 +165,7 @@ class ParameterControls extends StatelessWidget {
                     flex: 1,
                     child: TextFormField(
                       decoration: InputDecoration(
-                        labelText: 'H',
+                        labelText: localizations.height,
                         contentPadding: const EdgeInsets.symmetric(
                           horizontal: 8,
                           vertical: 8,
@@ -225,8 +227,8 @@ class ParameterControls extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'QUALITY',
+              Text(
+                localizations.quality,
                 style: TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.w500,
@@ -268,8 +270,8 @@ class ParameterControls extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'COLOR ADJUSTMENTS',
+              Text(
+                localizations.colorAdjustments,
                 style: TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.w500,
@@ -283,7 +285,10 @@ class ParameterControls extends StatelessWidget {
                 children: [
                   const Icon(Icons.brightness_6, size: 16),
                   const SizedBox(width: 6),
-                  const Text('Brightness', style: TextStyle(fontSize: 13)),
+                  Text(
+                    localizations.brightness,
+                    style: TextStyle(fontSize: 13),
+                  ),
                   const Spacer(),
                   Text(
                     '${imageProvider.brightness.toInt()}',
@@ -307,7 +312,7 @@ class ParameterControls extends StatelessWidget {
                 children: [
                   const Icon(Icons.contrast, size: 16),
                   const SizedBox(width: 6),
-                  const Text('Contrast', style: TextStyle(fontSize: 13)),
+                  Text(localizations.contrast, style: TextStyle(fontSize: 13)),
                   const Spacer(),
                   Text(
                     '${imageProvider.contrast.toStringAsFixed(2)}',
@@ -331,7 +336,10 @@ class ParameterControls extends StatelessWidget {
                 children: [
                   const Icon(Icons.gradient, size: 16),
                   const SizedBox(width: 6),
-                  const Text('Saturation', style: TextStyle(fontSize: 13)),
+                  Text(
+                    localizations.saturation,
+                    style: TextStyle(fontSize: 13),
+                  ),
                   const Spacer(),
                   Text(
                     '${imageProvider.saturation.toStringAsFixed(2)}',
@@ -365,8 +373,8 @@ class ParameterControls extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'TRANSFORM',
+              Text(
+                localizations.transform,
                 style: TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.w500,
@@ -380,7 +388,7 @@ class ParameterControls extends StatelessWidget {
                 children: [
                   const Icon(Icons.rotate_right, size: 16),
                   const SizedBox(width: 6),
-                  const Text('Rotation', style: TextStyle(fontSize: 13)),
+                  Text(localizations.rotation, style: TextStyle(fontSize: 13)),
                   const Spacer(),
                   Text(
                     '${imageProvider.rotation.toInt()}°',

@@ -10,6 +10,7 @@ class PresetManager extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final presetProvider = Provider.of<PresetProvider>(context);
+    final localizations = AppLocalizations.of(context)!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -20,7 +21,7 @@ class PresetManager extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                'PRESETS',
+                localizations.presetsSection,
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(
                   fontWeight: FontWeight.w500,
                   color: Colors.grey,
@@ -31,7 +32,7 @@ class PresetManager extends StatelessWidget {
               // Save preset button
               FilledButton.icon(
                 icon: const Icon(Icons.bookmark_add, size: 14),
-                label: const Text('Save', style: TextStyle(fontSize: 12)),
+                label: Text(localizations.save, style: TextStyle(fontSize: 12)),
                 style: ButtonStyle(
                   padding: WidgetStateProperty.all(
                     const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -70,7 +71,7 @@ class PresetManager extends StatelessWidget {
               ),
             ),
             child: presetProvider.presets.isEmpty
-                ? const Center(
+                ? Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -81,11 +82,11 @@ class PresetManager extends StatelessWidget {
                         ),
                         SizedBox(height: 8),
                         Text(
-                          'No presets saved',
+                          localizations.noPresetsSaved,
                           style: TextStyle(color: Colors.grey, fontSize: 12),
                         ),
                         Text(
-                          'Create a preset to save your settings',
+                          localizations.createPresetDescription,
                           style: TextStyle(color: Colors.grey, fontSize: 10),
                         ),
                       ],
@@ -117,7 +118,7 @@ class PresetManager extends StatelessWidget {
                           children: [
                             IconButton(
                               icon: const Icon(Icons.play_arrow, size: 14),
-                              tooltip: 'Apply preset',
+                              tooltip: localizations.applyPresetTooltip,
                               padding: EdgeInsets.zero,
                               constraints: const BoxConstraints.tightFor(
                                 width: 28,
@@ -140,7 +141,7 @@ class PresetManager extends StatelessWidget {
                             ),
                             IconButton(
                               icon: const Icon(Icons.delete, size: 14),
-                              tooltip: 'Delete preset',
+                              tooltip: localizations.deletePresetTooltip,
                               padding: EdgeInsets.zero,
                               constraints: const BoxConstraints.tightFor(
                                 width: 28,
@@ -187,20 +188,24 @@ class PresetManager extends StatelessWidget {
       context,
       listen: false,
     );
+    final localizations = AppLocalizations.of(context)!;
     String presetName = '';
 
     return showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Save Preset', style: TextStyle(fontSize: 16)),
+          title: Text(
+            localizations.savePresetDialogTitle,
+            style: TextStyle(fontSize: 16),
+          ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 decoration: InputDecoration(
-                  hintText: 'Enter preset name',
-                  labelText: 'Preset Name',
+                  hintText: localizations.enterPresetNameHint,
+                  labelText: localizations.presetNameLabel,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(4),
                     borderSide: BorderSide(
@@ -230,8 +235,8 @@ class PresetManager extends StatelessWidget {
               const SizedBox(height: 12),
               // Show current parameter values
               ExpansionTile(
-                title: const Text(
-                  'Current Parameters',
+                title: Text(
+                  localizations.currentParametersTitle,
                   style: TextStyle(fontSize: 14),
                 ),
                 children: [
@@ -266,7 +271,7 @@ class PresetManager extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Cancel'),
+              child: Text(localizations.cancel),
             ),
             FilledButton(
               onPressed: () {
@@ -291,7 +296,7 @@ class PresetManager extends StatelessWidget {
                   Navigator.of(context).pop();
                 }
               },
-              child: const Text('Save'),
+              child: Text(localizations.save),
             ),
           ],
         );

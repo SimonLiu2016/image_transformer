@@ -238,6 +238,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Language'**
   String get language;
+
+  /// No description provided for @adjustments.
+  ///
+  /// In en, this message translates to:
+  /// **'Adjustments'**
+  String get adjustments;
+
+  /// No description provided for @presets.
+  ///
+  /// In en, this message translates to:
+  /// **'Presets'**
+  String get presets;
+
+  /// No description provided for @format.
+  ///
+  /// In en, this message translates to:
+  /// **'FORMAT'**
+  String get format;
+
+  /// No description provided for @size.
+  ///
+  /// In en, this message translates to:
+  /// **'SIZE'**
+  String get size;
+
+  /// No description provided for @quality.
+  ///
+  /// In en, this message translates to:
+  /// **'QUALITY'**
+  String get quality;
+
+  /// No description provided for @colorAdjustments.
+  ///
+  /// In en, this message translates to:
+  /// **'COLOR ADJUSTMENTS'**
+  String get colorAdjustments;
+
+  /// No description provided for @transform.
+  ///
+  /// In en, this message translates to:
+  /// **'TRANSFORM'**
+  String get transform;
+
+  /// No description provided for @brightness.
+  ///
+  /// In en, this message translates to:
+  /// **'Brightness'**
+  String get brightness;
+
+  /// No description provided for @contrast.
+  ///
+  /// In en, this message translates to:
+  /// **'Contrast'**
+  String get contrast;
+
+  /// No description provided for @saturation.
+  ///
+  /// In en, this message translates to:
+  /// **'Saturation'**
+  String get saturation;
+
+  /// No description provided for @rotation.
+  ///
+  /// In en, this message translates to:
+  /// **'Rotation'**
+  String get rotation;
+
+  /// No description provided for @width.
+  ///
+  /// In en, this message translates to:
+  /// **'W'**
+  String get width;
+
+  /// No description provided for @height.
+  ///
+  /// In en, this message translates to:
+  /// **'H'**
+  String get height;
+
+  /// No description provided for @presetsSection.
+  ///
+  /// In en, this message translates to:
+  /// **'PRESETS'**
+  String get presetsSection;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @noPresetsSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'No presets saved'**
+  String get noPresetsSaved;
+
+  /// No description provided for @createPresetDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a preset to save your settings'**
+  String get createPresetDescription;
+
+  /// No description provided for @applyPresetTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply preset'**
+  String get applyPresetTooltip;
+
+  /// No description provided for @deletePresetTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete preset'**
+  String get deletePresetTooltip;
+
+  /// No description provided for @savePresetDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Preset'**
+  String get savePresetDialogTitle;
+
+  /// No description provided for @enterPresetNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter preset name'**
+  String get enterPresetNameHint;
+
+  /// No description provided for @presetNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Preset Name'**
+  String get presetNameLabel;
+
+  /// No description provided for @currentParametersTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Parameters'**
+  String get currentParametersTitle;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

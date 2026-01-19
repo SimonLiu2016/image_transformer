@@ -119,5 +119,125 @@
   "@language": {
     "type": "text",
     "placeholders": {}
+  },
+  "adjustments": "调整",
+  "@adjustments": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "presets": "预设",
+  "@presets": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "format": "格式",
+  "@format": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "size": "尺寸",
+  "@size": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "quality": "质量",
+  "@quality": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "colorAdjustments": "颜色调整",
+  "@colorAdjustments": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "transform": "变换",
+  "@transform": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "brightness": "亮度",
+  "@brightness": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "contrast": "对比度",
+  "@contrast": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "saturation": "饱和度",
+  "@saturation": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "rotation": "旋转",
+  "@rotation": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "width": "宽",
+  "@width": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "height": "高",
+  "@height": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "presetsSection": "预设",
+  "@presetsSection": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "save": "保存",
+  "@save": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "noPresetsSaved": "暂无预设",
+  "@noPresetsSaved": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "createPresetDescription": "创建预设以保存您的设置",
+  "@createPresetDescription": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "applyPresetTooltip": "应用预设",
+  "@applyPresetTooltip": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "deletePresetTooltip": "删除预设",
+  "@deletePresetTooltip": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "savePresetDialogTitle": "保存预设",
+  "@savePresetDialogTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "enterPresetNameHint": "输入预设名称",
+  "@enterPresetNameHint": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "presetNameLabel": "预设名称",
+  "@presetNameLabel": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "currentParametersTitle": "当前参数",
+  "@currentParametersTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "cancel": "取消",
+  "@cancel": {
+    "type": "text",
+    "placeholders": {}
   }
 }

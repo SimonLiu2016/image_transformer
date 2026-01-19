@@ -79,4 +79,73 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get language => 'Language';
+
+  @override
+  String get adjustments => 'Adjustments';
+
+  @override
+  String get presets => 'Presets';
+
+  @override
+  String get format => 'FORMAT';
+
+  @override
+  String get size => 'SIZE';
+
+  @override
+  String get quality => 'QUALITY';
+
+  @override
+  String get colorAdjustments => 'COLOR ADJUSTMENTS';
+
+  @override
+  String get transform => 'TRANSFORM';
+
+  @override
+  String get brightness => 'Brightness';
+
+  @override
+  String get contrast => 'Contrast';
+
+  @override
+  String get saturation => 'Saturation';
+
+  @override
+  String get rotation => 'Rotation';
+
+  @override
+  String get width => 'W';
+
+  @override
+  String get height => 'H';
+
+  @override
+  String get presetsSection => 'PRESETS';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get noPresetsSaved => 'No presets saved';
+
+  @override
+  String get createPresetDescription => 'Create a preset to save your settings';
+
+  @override
+  String get applyPresetTooltip => 'Apply preset';
+
+  @override
+  String get deletePresetTooltip => 'Delete preset';
+
+  @override
+  String get savePresetDialogTitle => 'Save Preset';
+
+  @override
+  String get enterPresetNameHint => 'Enter preset name';
+
+  @override
+  String get presetNameLabel => 'Preset Name';
+
+  @override
+  String get currentParametersTitle => 'Current Parameters';
 }

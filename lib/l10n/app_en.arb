@@ -119,5 +119,125 @@
   "@language": {
     "type": "text",
     "placeholders": {}
+  },
+  "adjustments": "Adjustments",
+  "@adjustments": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "presets": "Presets",
+  "@presets": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "format": "FORMAT",
+  "@format": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "size": "SIZE",
+  "@size": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "quality": "QUALITY",
+  "@quality": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "colorAdjustments": "COLOR ADJUSTMENTS",
+  "@colorAdjustments": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "transform": "TRANSFORM",
+  "@transform": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "brightness": "Brightness",
+  "@brightness": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "contrast": "Contrast",
+  "@contrast": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "saturation": "Saturation",
+  "@saturation": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "rotation": "Rotation",
+  "@rotation": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "width": "W",
+  "@width": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "height": "H",
+  "@height": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "presetsSection": "PRESETS",
+  "@presetsSection": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "save": "Save",
+  "@save": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "noPresetsSaved": "No presets saved",
+  "@noPresetsSaved": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "createPresetDescription": "Create a preset to save your settings",
+  "@createPresetDescription": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "applyPresetTooltip": "Apply preset",
+  "@applyPresetTooltip": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "deletePresetTooltip": "Delete preset",
+  "@deletePresetTooltip": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "savePresetDialogTitle": "Save Preset",
+  "@savePresetDialogTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "enterPresetNameHint": "Enter preset name",
+  "@enterPresetNameHint": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "presetNameLabel": "Preset Name",
+  "@presetNameLabel": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "currentParametersTitle": "Current Parameters",
+  "@currentParametersTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "type": "text",
+    "placeholders": {}
   }
 }

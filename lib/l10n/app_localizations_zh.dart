@@ -79,4 +79,73 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get language => '语言';
+
+  @override
+  String get adjustments => '调整';
+
+  @override
+  String get presets => '预设';
+
+  @override
+  String get format => '格式';
+
+  @override
+  String get size => '尺寸';
+
+  @override
+  String get quality => '质量';
+
+  @override
+  String get colorAdjustments => '颜色调整';
+
+  @override
+  String get transform => '变换';
+
+  @override
+  String get brightness => '亮度';
+
+  @override
+  String get contrast => '对比度';
+
+  @override
+  String get saturation => '饱和度';
+
+  @override
+  String get rotation => '旋转';
+
+  @override
+  String get width => '宽';
+
+  @override
+  String get height => '高';
+
+  @override
+  String get presetsSection => '预设';
+
+  @override
+  String get save => '保存';
+
+  @override
+  String get noPresetsSaved => '暂无预设';
+
+  @override
+  String get createPresetDescription => '创建预设以保存您的设置';
+
+  @override
+  String get applyPresetTooltip => '应用预设';
+
+  @override
+  String get deletePresetTooltip => '删除预设';
+
+  @override
+  String get savePresetDialogTitle => '保存预设';
+
+  @override
+  String get enterPresetNameHint => '输入预设名称';
+
+  @override
+  String get presetNameLabel => '预设名称';
+
+  @override
+  String get currentParametersTitle => '当前参数';
 }
