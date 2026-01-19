@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import '../services/file_service.dart';
 import '../providers/image_provider.dart' as ImageTransformProvider;
@@ -31,7 +32,9 @@ class _MainLayoutState extends State<MainLayout> {
       ),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Image Transformer'),
+          title: Text(
+            AppLocalizations.of(context)?.title ?? 'Image Transformer',
+          ),
           actions: [
             Switch(
               value: _isBatchMode,
@@ -41,7 +44,7 @@ class _MainLayoutState extends State<MainLayout> {
                 });
               },
             ),
-            const Text('Batch Mode'),
+            Text(AppLocalizations.of(context)?.batchMode ?? 'Batch Mode'),
             IconButton(
               icon: const Icon(Icons.settings),
               onPressed: () {

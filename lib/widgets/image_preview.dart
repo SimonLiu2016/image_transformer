@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
 import '../providers/image_provider.dart' as ImageTransformProvider;
+import '../l10n/app_localizations.dart';
 
 class ImagePreview extends StatefulWidget {
   const ImagePreview({super.key});
@@ -27,9 +28,12 @@ class _ImagePreviewState extends State<ImagePreview> {
           // Preview header
           Row(
             children: [
-              const Text(
-                'Image Preview',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              Text(
+                AppLocalizations.of(context)?.imagePreview ?? 'Image Preview',
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const Spacer(),
               // Toggle comparison view
@@ -137,9 +141,11 @@ class _ImagePreviewState extends State<ImagePreview> {
           Container(
             constraints: const BoxConstraints.expand(height: 50),
             child: TabBar(
-              tabs: const [
-                Tab(text: 'Original'),
-                Tab(text: 'Processed'),
+              tabs: [
+                Tab(text: AppLocalizations.of(context)?.original ?? 'Original'),
+                Tab(
+                  text: AppLocalizations.of(context)?.processed ?? 'Processed',
+                ),
               ],
             ),
           ),

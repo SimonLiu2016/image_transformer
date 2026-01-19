@@ -1,0 +1,118 @@
+{
+  "@@locale": "en",
+  "title": "Image Transformer",
+  "@title": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "importImage": "Import Image",
+  "@importImage": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "applyPreset": "Apply Preset",
+  "@applyPreset": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "export": "Export",
+  "@export": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "settings": "Settings",
+  "@settings": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "batchMode": "Batch Mode",
+  "@batchMode": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "imagePreview": "Image Preview",
+  "@imagePreview": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "original": "Original",
+  "@original": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "processed": "Processed",
+  "@processed": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "compare": "Compare",
+  "@compare": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "appearance": "Appearance",
+  "@appearance": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "darkMode": "Dark Mode",
+  "@darkMode": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "defaultParameters": "Default Parameters",
+  "@defaultParameters": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "defaultOutputFormat": "Default Output Format",
+  "@defaultOutputFormat": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "defaultQuality": "Default Quality",
+  "@defaultQuality": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "autoSavePresets": "Auto-save Presets",
+  "@autoSavePresets": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "about": "About",
+  "@about": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "imageTransformer": "Image Transformer",
+  "@imageTransformer": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "addImages": "Add Images",
+  "@addImages": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "selectOutputFolder": "Select Output Folder",
+  "@selectOutputFolder": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "status": "Status",
+  "@status": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "imagesToProcess": "Images to Process",
+  "@imagesToProcess": {
+    "type": "text",
+    "placeholders": {}
+  }
+}

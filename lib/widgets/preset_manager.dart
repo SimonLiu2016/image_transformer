@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/preset_provider.dart';
 import '../providers/image_provider.dart' as ImageTransformProvider;
+import '../l10n/app_localizations.dart';
 
 class PresetManager extends StatelessWidget {
   const PresetManager({super.key});
@@ -13,9 +14,9 @@ class PresetManager extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'Saved Presets',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 16),
 
@@ -55,7 +56,10 @@ class PresetManager extends StatelessWidget {
         // Save preset button
         ElevatedButton.icon(
           icon: const Icon(Icons.bookmark_add),
-          label: const Text('Save Current as Preset'),
+          label: Text(
+            AppLocalizations.of(context)?.applyPreset ??
+                'Save Current as Preset',
+          ),
           onPressed: () {
             _showSavePresetDialog(context);
           },
@@ -76,7 +80,9 @@ class PresetManager extends StatelessWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Save Preset'),
+          title: Text(
+            AppLocalizations.of(context)?.applyPreset ?? 'Save Preset',
+          ),
           content: TextField(
             decoration: const InputDecoration(hintText: 'Enter preset name'),
             onChanged: (value) {
@@ -88,7 +94,7 @@ class PresetManager extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Cancel'),
+              child: Text(AppLocalizations.of(context)?.cancel ?? 'Cancel'),
             ),
             TextButton(
               onPressed: () {
@@ -113,7 +119,7 @@ class PresetManager extends StatelessWidget {
                   Navigator.of(context).pop();
                 }
               },
-              child: const Text('Save'),
+              child: Text(AppLocalizations.of(context)?.export ?? 'Save'),
             ),
           ],
         );

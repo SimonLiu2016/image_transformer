@@ -1,0 +1,118 @@
+{
+  "@@locale": "zh",
+  "title": "图像转换器",
+  "@title": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "importImage": "导入图像",
+  "@importImage": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "applyPreset": "应用预设",
+  "@applyPreset": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "export": "导出",
+  "@export": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "settings": "设置",
+  "@settings": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "batchMode": "批量模式",
+  "@batchMode": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "imagePreview": "图像预览",
+  "@imagePreview": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "original": "原始",
+  "@original": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "processed": "已处理",
+  "@processed": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "compare": "比较",
+  "@compare": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "appearance": "外观",
+  "@appearance": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "darkMode": "深色模式",
+  "@darkMode": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "defaultParameters": "默认参数",
+  "@defaultParameters": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "defaultOutputFormat": "默认输出格式",
+  "@defaultOutputFormat": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "defaultQuality": "默认质量",
+  "@defaultQuality": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "autoSavePresets": "自动保存预设",
+  "@autoSavePresets": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "about": "关于",
+  "@about": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "imageTransformer": "图像转换器",
+  "@imageTransformer": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "addImages": "添加图像",
+  "@addImages": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "selectOutputFolder": "选择输出文件夹",
+  "@selectOutputFolder": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "cancel": "取消",
+  "@cancel": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "status": "状态",
+  "@status": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "imagesToProcess": "待处理图像",
+  "@imagesToProcess": {
+    "type": "text",
+    "placeholders": {}
+  }
+}

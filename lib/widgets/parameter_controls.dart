@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/image_provider.dart' as ImageTransformProvider;
+import '../l10n/app_localizations.dart';
 
 class ParameterControls extends StatelessWidget {
   const ParameterControls({super.key});
@@ -14,9 +15,9 @@ class ParameterControls extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'Color Adjustments',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
 
@@ -25,7 +26,7 @@ class ParameterControls extends StatelessWidget {
           children: [
             const Icon(Icons.brightness_6, size: 18),
             const SizedBox(width: 8),
-            const Text('Brightness'),
+            Text('Brightness'),
             const Spacer(),
             Text('${imageProvider.brightness.toInt()}'),
           ],
@@ -44,7 +45,7 @@ class ParameterControls extends StatelessWidget {
           children: [
             const Icon(Icons.contrast, size: 18),
             const SizedBox(width: 8),
-            const Text('Contrast'),
+            Text('Contrast'),
             const Spacer(),
             Text('${imageProvider.contrast.toStringAsFixed(2)}'),
           ],
@@ -63,7 +64,7 @@ class ParameterControls extends StatelessWidget {
           children: [
             const Icon(Icons.gradient, size: 18),
             const SizedBox(width: 8),
-            const Text('Saturation'),
+            Text('Saturation'),
             const Spacer(),
             Text('${imageProvider.saturation.toStringAsFixed(2)}'),
           ],
@@ -79,9 +80,9 @@ class ParameterControls extends StatelessWidget {
 
         const SizedBox(height: 16),
 
-        const Text(
+        Text(
           'Geometric Transformations',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
 
@@ -90,7 +91,7 @@ class ParameterControls extends StatelessWidget {
           children: [
             const Icon(Icons.rotate_right, size: 18),
             const SizedBox(width: 8),
-            const Text('Rotation'),
+            Text('Rotation'),
             const Spacer(),
             Text('${imageProvider.rotation.toInt()}°'),
           ],

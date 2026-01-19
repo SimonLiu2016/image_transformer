@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/app_provider.dart';
+import '../l10n/app_localizations.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -8,9 +9,10 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appProvider = Provider.of<AppProvider>(context);
+    final localizations = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Settings')),
+      appBar: AppBar(title: Text(localizations.settings)),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView(
@@ -22,16 +24,16 @@ class SettingsPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Appearance',
-                      style: TextStyle(
+                    Text(
+                      localizations.appearance,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(height: 16),
                     SwitchListTile(
-                      title: const Text('Dark Mode'),
+                      title: Text(localizations.darkMode),
                       value: appProvider.isDarkMode,
                       onChanged: (value) {
                         appProvider.toggleTheme();
@@ -50,9 +52,9 @@ class SettingsPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Default Parameters',
-                      style: TextStyle(
+                    Text(
+                      localizations.defaultParameters,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
@@ -60,7 +62,7 @@ class SettingsPage extends StatelessWidget {
                     const SizedBox(height: 16),
 
                     // Default output format
-                    const Text('Default Output Format'),
+                    Text(localizations.defaultOutputFormat),
                     const SizedBox(height: 8),
                     DropdownButtonFormField<String>(
                       value: appProvider.defaultOutputFormat,
@@ -84,7 +86,7 @@ class SettingsPage extends StatelessWidget {
                     const SizedBox(height: 16),
 
                     // Default quality
-                    const Text('Default Quality'),
+                    Text(localizations.defaultQuality),
                     const SizedBox(height: 8),
                     Slider(
                       value: appProvider.defaultQuality.toDouble(),
@@ -100,7 +102,7 @@ class SettingsPage extends StatelessWidget {
                     const SizedBox(height: 16),
 
                     SwitchListTile(
-                      title: const Text('Auto-save Presets'),
+                      title: Text(localizations.autoSavePresets),
                       value: appProvider.autoSavePreset,
                       onChanged: (value) {
                         appProvider.setAutoSavePreset(value);
@@ -119,19 +121,17 @@ class SettingsPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'About',
-                      style: TextStyle(
+                    Text(
+                      localizations.about,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(height: 8),
-                    const Text('Image Transformer v1.0'),
+                    Text(localizations.imageTransformer + ' v1.0'),
                     const SizedBox(height: 8),
-                    const Text(
-                      'A powerful image conversion and processing tool.',
-                    ),
+                    Text('A powerful image conversion and processing tool.'),
                   ],
                 ),
               ),

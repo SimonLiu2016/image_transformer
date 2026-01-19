@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/preset_provider.dart';
+import '../l10n/app_localizations.dart';
 import 'parameter_controls.dart';
 import 'preset_manager.dart';
 
@@ -16,7 +17,7 @@ class SidebarPanel extends StatelessWidget {
         child: Column(
           children: [
             TabBar(
-              tabs: const [
+              tabs: [
                 Tab(text: 'Parameters'),
                 Tab(text: 'Presets'),
               ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/image_provider.dart' as ImageTransformProvider;
 import '../services/file_service.dart';
+import '../l10n/app_localizations.dart';
 
 class BatchProcessor extends StatefulWidget {
   const BatchProcessor({super.key});
@@ -23,9 +24,9 @@ class _BatchProcessorState extends State<BatchProcessor> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'Batch Processor',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 24),
 
@@ -34,7 +35,9 @@ class _BatchProcessorState extends State<BatchProcessor> {
               children: [
                 ElevatedButton.icon(
                   icon: const Icon(Icons.folder_open),
-                  label: const Text('Add Images'),
+                  label: Text(
+                    AppLocalizations.of(context)?.addImages ?? 'Add Images',
+                  ),
                   onPressed: () async {
                     final paths = await FileService.pickMultipleImages();
                     if (paths.isNotEmpty) {
@@ -45,7 +48,10 @@ class _BatchProcessorState extends State<BatchProcessor> {
                 const SizedBox(width: 16),
                 ElevatedButton.icon(
                   icon: const Icon(Icons.folder),
-                  label: const Text('Select Output Folder'),
+                  label: Text(
+                    AppLocalizations.of(context)?.selectOutputFolder ??
+                        'Select Output Folder',
+                  ),
                   onPressed: () async {
                     // For now, we'll just show a placeholder - actual folder selection
                     // would require additional implementation
@@ -63,7 +69,7 @@ class _BatchProcessorState extends State<BatchProcessor> {
                 const SizedBox(width: 16),
                 ElevatedButton.icon(
                   icon: const Icon(Icons.stop),
-                  label: const Text('Cancel'),
+                  label: Text(AppLocalizations.of(context)?.cancel ?? 'Cancel'),
                   onPressed: imageProvider.isBatchProcessing
                       ? imageProvider.cancelBatchProcessing
                       : null,
@@ -79,9 +85,9 @@ class _BatchProcessorState extends State<BatchProcessor> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Status',
-                      style: TextStyle(
+                    Text(
+                      AppLocalizations.of(context)?.status ?? 'Status',
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
@@ -111,9 +117,10 @@ class _BatchProcessorState extends State<BatchProcessor> {
             const SizedBox(height: 24),
 
             // Image list
-            const Text(
-              'Images to Process',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            Text(
+              AppLocalizations.of(context)?.imagesToProcess ??
+                  'Images to Process',
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
             Expanded(

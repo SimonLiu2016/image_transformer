@@ -48,11 +48,18 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   
+  # Internationalization
+  flutter_localizations:
+    sdk: flutter
+  
   # File picking and handling
   file_picker: ^8.0.0+1
   
   # Cross-platform window management (for macOS)
   bitsdojo_window: ^0.1.6
+  
+  # System tray for macOS
+  system_tray: ^0.1.1
   
   # Utility libraries
   uuid: ^4.5.1
@@ -78,6 +85,7 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+  generate: true
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
