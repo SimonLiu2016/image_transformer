@@ -148,4 +148,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get currentParametersTitle => 'Current Parameters';
+
+  @override
+  String get reset => 'Reset';
+
+  @override
+  String get lockAspectRatio => 'Lock Aspect Ratio';
 }

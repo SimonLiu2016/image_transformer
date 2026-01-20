@@ -235,6 +235,16 @@
     "type": "text",
     "placeholders": {}
   },
+  "reset": "重置",
+  "@reset": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "lockAspectRatio": "锁定宽高比",
+  "@lockAspectRatio": {
+    "type": "text",
+    "placeholders": {}
+  },
   "cancel": "取消",
   "@cancel": {
     "type": "text",

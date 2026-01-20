@@ -12,10 +12,56 @@ class ParameterControls extends StatelessWidget {
       context,
     );
     final localizations = AppLocalizations.of(context)!;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // Header with title and reset button
+        Container(
+          padding: const EdgeInsets.only(bottom: 8),
+          child: Row(
+            children: [
+              Text(
+                localizations.adjustments,
+                style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                  fontWeight: FontWeight.w500,
+                  color: Colors.grey,
+                ),
+              ),
+              const Spacer(),
+
+              // Reset button
+              FilledButton.icon(
+                icon: const Icon(Icons.refresh, size: 14),
+                label: Text(
+                  localizations.reset,
+                  style: TextStyle(fontSize: 12),
+                ),
+                style: ButtonStyle(
+                  padding: WidgetStateProperty.all(
+                    const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  ),
+                  visualDensity: VisualDensity.compact,
+                  backgroundColor: WidgetStateProperty.resolveWith<Color?>((
+                    Set<WidgetState> states,
+                  ) {
+                    if (states.contains(WidgetState.hovered)) {
+                      return Theme.of(
+                        context,
+                      ).colorScheme.error.withOpacity(0.8);
+                    }
+                    return Theme.of(context).colorScheme.error;
+                  }),
+                ),
+                onPressed: () {
+                  imageProvider.reset();
+                },
+              ),
+            ],
+          ),
+        ),
+
+        const SizedBox(height: 4),
+
         // Format conversion section
         Container(
           padding: const EdgeInsets.all(10),
@@ -62,24 +108,6 @@ class ParameterControls extends StatelessWidget {
                   ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(4),
-                    borderSide: BorderSide(
-                      color: Theme.of(context).dividerColor,
-                      width: 1,
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4),
-                    borderSide: BorderSide(
-                      color: Theme.of(context).dividerColor,
-                      width: 1,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4),
-                    borderSide: BorderSide(
-                      color: Theme.of(context).colorScheme.primary,
-                      width: 1,
-                    ),
                   ),
                 ),
               ),
@@ -124,24 +152,6 @@ class ParameterControls extends StatelessWidget {
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(4),
-                          borderSide: BorderSide(
-                            color: Theme.of(context).dividerColor,
-                            width: 1,
-                          ),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4),
-                          borderSide: BorderSide(
-                            color: Theme.of(context).dividerColor,
-                            width: 1,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4),
-                          borderSide: BorderSide(
-                            color: Theme.of(context).colorScheme.primary,
-                            width: 1,
-                          ),
                         ),
                       ),
                       keyboardType: TextInputType.number,
@@ -150,17 +160,18 @@ class ParameterControls extends StatelessWidget {
                           : '',
                       onChanged: (value) {
                         if (value.isNotEmpty) {
+                          int widthValue = double.tryParse(value)?.round() ?? 0;
                           imageProvider.setDimensions(
-                            int.tryParse(value) ?? 0,
+                            widthValue,
                             imageProvider.height,
                           );
+                        } else {
+                          imageProvider.setDimensions(0, imageProvider.height);
                         }
                       },
                     ),
                   ),
-                  const SizedBox(width: 6),
-                  const Text('×', style: TextStyle(fontSize: 14)),
-                  const SizedBox(width: 6),
+                  const SizedBox(width: 8),
                   Expanded(
                     flex: 1,
                     child: TextFormField(
@@ -172,24 +183,6 @@ class ParameterControls extends StatelessWidget {
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(4),
-                          borderSide: BorderSide(
-                            color: Theme.of(context).dividerColor,
-                            width: 1,
-                          ),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4),
-                          borderSide: BorderSide(
-                            color: Theme.of(context).dividerColor,
-                            width: 1,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4),
-                          borderSide: BorderSide(
-                            color: Theme.of(context).colorScheme.primary,
-                            width: 1,
-                          ),
                         ),
                       ),
                       keyboardType: TextInputType.number,
@@ -198,10 +191,14 @@ class ParameterControls extends StatelessWidget {
                           : '',
                       onChanged: (value) {
                         if (value.isNotEmpty) {
+                          int heightValue =
+                              double.tryParse(value)?.round() ?? 0;
                           imageProvider.setDimensions(
                             imageProvider.width,
-                            int.tryParse(value) ?? 0,
+                            heightValue,
                           );
+                        } else {
+                          imageProvider.setDimensions(imageProvider.width, 0);
                         }
                       },
                     ),
@@ -278,12 +275,12 @@ class ParameterControls extends StatelessWidget {
                   color: Colors.grey,
                 ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 6),
 
               // Brightness control
               Row(
                 children: [
-                  const Icon(Icons.brightness_6, size: 16),
+                  const Icon(Icons.brightness_medium, size: 16),
                   const SizedBox(width: 6),
                   Text(
                     localizations.brightness,

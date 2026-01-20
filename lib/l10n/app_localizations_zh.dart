@@ -148,4 +148,10 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get currentParametersTitle => '当前参数';
+
+  @override
+  String get reset => '重置';
+
+  @override
+  String get lockAspectRatio => '锁定宽高比';
 }

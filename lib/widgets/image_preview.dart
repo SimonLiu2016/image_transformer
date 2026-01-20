@@ -69,13 +69,7 @@ class _ImagePreviewState extends State<ImagePreview> {
                   ],
                 ),
 
-                // Reset button
-                TextButton(
-                  child: const Text('Reset', style: TextStyle(fontSize: 12)),
-                  onPressed: () {
-                    imageProvider.reset();
-                  },
-                ),
+                // Removed Reset button since it's now in the parameter controls panel
               ],
             ),
           ),

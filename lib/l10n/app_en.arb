@@ -235,6 +235,16 @@
     "type": "text",
     "placeholders": {}
   },
+  "reset": "Reset",
+  "@reset": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "lockAspectRatio": "Lock Aspect Ratio",
+  "@lockAspectRatio": {
+    "type": "text",
+    "placeholders": {}
+  },
   "cancel": "Cancel",
   "@cancel": {
     "type": "text",

@@ -376,6 +376,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Current Parameters'**
   String get currentParametersTitle;
+
+  /// No description provided for @reset.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get reset;
+
+  /// No description provided for @lockAspectRatio.
+  ///
+  /// In en, this message translates to:
+  /// **'Lock Aspect Ratio'**
+  String get lockAspectRatio;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
