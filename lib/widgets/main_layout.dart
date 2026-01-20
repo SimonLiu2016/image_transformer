@@ -53,19 +53,6 @@ class _MainLayoutState extends State<MainLayout> {
               ), // Increased left padding to avoid overlapping with system window controls
               child: Row(
                 children: [
-                  // Logo/icon area
-                  Container(
-                    padding: const EdgeInsets.all(4),
-                    child: const Icon(
-                      Icons.brush,
-                      size: 16,
-                      color: Color(0xFF007AFF),
-                    ),
-                  ),
-                  const SizedBox(width: 2),
-
-                  const SizedBox(width: 8),
-
                   const Spacer(),
 
                   // File operations
