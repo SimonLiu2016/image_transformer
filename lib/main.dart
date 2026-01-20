@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'services/tray_service.dart';
 import 'package:provider/provider.dart';
 import 'l10n/app_localizations.dart';
 import 'providers/app_provider.dart';
@@ -18,11 +17,6 @@ class ImageTransformerApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Initialize tray service when the app starts
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      TrayService.instance.initTray();
-    });
-
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AppProvider()),
