@@ -30,67 +30,60 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-  # The following adds icons support to your application.
   cupertino_icons: ^1.0.8
-  
-  # Image processing libraries
-  image: ^4.2.0
-  flutter_image_compress: ^2.3.0
-  path: ^1.9.0
-  path_provider: ^2.1.3
-  
-  # State management
-  provider: ^6.1.2
-  
-  # Local storage for presets
-  shared_preferences: ^2.2.3
-  hive: ^2.2.3
-  hive_flutter: ^1.1.0
-  
-  # Internationalization
   flutter_localizations:
     sdk: flutter
+  path_provider: ^2.1.5  # 添加路径提供者
+  path: ^1.9.0
+  window_manager: ^0.5.1
+  tray_manager: ^0.5.2
+  image: ^4.0.0  # 添加图像处理库
+  archive: ^4.0.0  # 添加归档处理库，用于处理ICNS文件
+  hive: ^2.2.3  # 添加Hive数据库
+  hive_flutter: ^1.1.0  # 添加Hive Flutter集成
+  logging: ^1.2.0  # 添加日志库
+  uuid: ^4.5.0  # 添加UUID生成器
+  intl: ^0.20.2  # 添加国际化支持
+  http: ^1.2.2  # 添加HTTP客户端
+  url_launcher: ^6.3.2  # 添加URL启动器，用于打开目录和Feedback Assistant
+  provider: ^6.1.2  # 添加状态管理库
+  package_info_plus: ^8.0.0  # 添加应用信息获取库
+  in_app_purchase: ^3.2.3
+  encrypt: ^5.0.3
+  cryptography: ^2.0.0
+  convert: ^3.1.1
+  hashlib: ^2.3.0
+  synchronized: ^3.1.0
   
-  # File picking and handling
+  # Additional libraries
+  flutter_image_compress: ^2.3.0
   file_picker: ^8.0.0+1
-  
-  # Cross-platform window management (for macOS)
-  bitsdojo_window: ^0.1.6
-  
-  # System tray for macOS
-  system_tray: ^0.1.1
-  
-  # Utility libraries
-  uuid: ^4.5.1
+  shared_preferences: ^2.2.3
   collection: ^1.18.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
   flutter_lints: ^5.0.0
-  
-  # Hive generator for code generation
-  build_runner: ^2.4.9
-  hive_generator: ^2.0.1
+  intl_utils: ^2.8.0
+  flutter_launcher_icons: ^0.14.0
+  hive_generator: ^2.0.1  # 添加Hive代码生成器
+  build_runner: ^2.4.9  # 添加构建工具
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
 flutter:
-  generate: true
-
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
   uses-material-design: true
+  
+  # 添加图片资源
+  assets:
+    - assets/images/
+    - assets/images/app_icons/
+  
+  # 添加国际化支持
+  generate: true
 
   # To add assets to your application, add an assets section, like this:
   # assets:
