@@ -8,6 +8,8 @@ import 'sidebar_panel.dart';
 import 'image_preview.dart';
 import 'batch_processor.dart';
 import 'settings_page.dart';
+// Temporarily commented out due to engine compatibility issues
+// import 'package:super_drag_and_drop/super_drag_and_drop.dart';
 
 class MainLayout extends StatefulWidget {
   const MainLayout({super.key});
@@ -330,7 +332,7 @@ class _MainLayoutState extends State<MainLayout> {
             ),
           ),
 
-          // Main content area
+          // Main content area - temporarily reverted to original layout to avoid compatibility issues
           Expanded(
             child: Row(
               children: [
