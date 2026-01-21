@@ -252,6 +252,19 @@ class _ImagePreviewState extends State<ImagePreview> {
       );
     }
 
+    // Helper function to check if any parameter is modified
+    bool _hasNonDefaultValues(ImageTransformProvider.ImageProvider provider) {
+      bool hasChanges = provider.brightness != 0.0 ||
+          provider.contrast != 1.0 ||
+          provider.saturation != 1.0 ||
+          provider.rotation != 0.0 ||
+          provider.width != 0 ||
+          provider.height != 0 ||
+          provider.quality != 100.0 ||
+          provider.outputFormat != 'png';
+      return hasChanges;
+    }
+    
     // Check if this is the processed image and if it's currently being processed
     final imageProvider = Provider.of<ImageTransformProvider.ImageProvider>(
       context,
@@ -259,14 +272,13 @@ class _ImagePreviewState extends State<ImagePreview> {
     bool isProcessingPreview =
         imagePath == imageProvider.processedImagePath &&
         imageProvider.selectedImagePath != null &&
-        (imageProvider.brightness != 0.0 ||
-            imageProvider.contrast != 1.0 ||
-            imageProvider.saturation != 1.0 ||
-            imageProvider.rotation != 0.0 ||
-            imageProvider.width != 0 ||
-            imageProvider.height != 0 ||
-            imageProvider.quality != 100.0 ||
-            imageProvider.outputFormat != 'png');
+        _hasNonDefaultValues(imageProvider) &&
+        !File(imagePath).existsSync(); // Show loading when parameters are modified but processed file doesn't exist yet
+    
+    // Print debug info
+    if (imagePath == imageProvider.processedImagePath) {
+      print('ImagePreview: Checking processed image. Exists: ${File(imagePath).existsSync()}, isProcessingPreview: $isProcessingPreview');
+    }
 
     return DropTarget(
       onDragDone: (details) {

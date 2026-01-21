@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart' show compute;
 
 import 'dart:io';
+import 'dart:async';
 import 'package:path/path.dart' as path;
 import '../services/image_service.dart';
 
@@ -110,30 +112,49 @@ class ImageProvider extends ChangeNotifier {
 
   // Flag to track if we should process the preview
   bool _shouldProcessPreview = false;
-
+    
+  // Flag to track if currently processing
+  bool _isProcessing = false;
+    
+  // Debounce timer to prevent too frequent updates
+  Timer? _debounceTimer;
+    
   Future<void> processImageForPreview() async {
     if (_selectedImagePath == null) {
+      print('processImageForPreview: No selected image');
       return;
     }
-
+  
     // Only process if we have changes that warrant a preview update
     if (!_shouldProcessPreview) {
+      print('processImageForPreview: Should not process preview');
       return;
     }
-
+      
+    // Prevent multiple simultaneous processing
+    if (_isProcessing) {
+      print('processImageForPreview: Already processing, skipping');
+      return;
+    }
+      
+    _isProcessing = true;
+    print('processImageForPreview: Starting processing for ${_selectedImagePath}');
+      
     try {
       // Clean up previous processed image if it exists
       if (_processedImagePath != null) {
         try {
           File fileToDelete = File(_processedImagePath!);
           if (await fileToDelete.exists()) {
+            print('processImageForPreview: Deleting old preview ${_processedImagePath}');
             await fileToDelete.delete();
           }
         } catch (e) {
+          print('processImageForPreview: Error deleting old preview: $e');
           // Ignore errors when deleting the old preview
         }
       }
-
+        
       // Create a temporary path for the preview in the system temp directory
       String fileName = path.basename(_selectedImagePath!);
       String nameWithoutExt = fileName.substring(0, fileName.lastIndexOf('.'));
@@ -146,7 +167,7 @@ class ImageProvider extends ChangeNotifier {
         Directory.systemTemp.path,
         '${sanitizedBaseName}_preview_temp.${_outputFormat.toLowerCase()}',
       );
-
+        
       final config = ImageProcessingConfig(
         outputFormat: _outputFormat,
         width: _width > 0 ? _width : null,
@@ -157,26 +178,63 @@ class ImageProvider extends ChangeNotifier {
         saturation: _saturation,
         rotation: _rotation,
       );
-
-      String processedPath = await ImageService.processImage(
+  
+      print('processImageForPreview: About to process image with config');
+        
+      // Use compute to run image processing in a separate isolate to avoid blocking UI
+      String processedPath = await computeImageProcessing(
         _selectedImagePath!,
         tempPath,
         config,
       );
-
+        
+      print('processImageForPreview: Processing completed, path: $processedPath');
+        
       _processedImagePath = processedPath;
+      _shouldProcessPreview = false; // Reset flag after processing
       notifyListeners();
+      print('processImageForPreview: Notified listeners');
     } catch (e) {
       print('Error processing image for preview: $e');
+    } finally {
+      _isProcessing = false;
     }
   }
-
-  // Method to trigger preview processing only when needed
-  void requestPreviewUpdate() {
-    _shouldProcessPreview = true;
-    processImageForPreview();
+    
+  // Helper method to run image processing in a separate isolate
+  Future<String> computeImageProcessing(
+    String inputPath,
+    String outputPath,
+    ImageProcessingConfig config,
+  ) async {
+    final params = _ImageProcessingParams(inputPath, outputPath, config);
+    return await compute(_processImageIsolate, params);
   }
-
+    
+  // Isolate function for image processing
+  static Future<String> _processImageIsolate(_ImageProcessingParams params) async {
+    return await ImageService.processImage(
+      params.inputPath,
+      params.outputPath,
+      params.config,
+    );
+  }
+    
+  // Method to trigger preview processing only when needed with debounce
+  void requestPreviewUpdate() {
+    print('requestPreviewUpdate: Setting flag and starting debounce timer');
+    _shouldProcessPreview = true;
+      
+    // Cancel previous timer if it exists
+    _debounceTimer?.cancel();
+      
+    // Set a new timer to delay the processing and prevent too frequent updates
+    _debounceTimer = Timer(const Duration(milliseconds: 300), () {
+      print('requestPreviewUpdate: Debounce timer finished, calling processImageForPreview');
+      processImageForPreview();
+    });
+  }
+    
   // Method to set the selected image without triggering preview
   void setSelectedImageWithoutPreview(String path) {
     _selectedImagePath = path;
@@ -284,4 +342,13 @@ class ImageProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+}
+
+/// Helper class to pass multiple parameters to isolate
+class _ImageProcessingParams {
+  final String inputPath;
+  final String outputPath;
+  final ImageProcessingConfig config;
+
+  _ImageProcessingParams(this.inputPath, this.outputPath, this.config);
 }
