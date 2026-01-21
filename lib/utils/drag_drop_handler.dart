@@ -6,6 +6,7 @@ class DragDropHandler {
   static bool isImageFile(String filePath) {
     final extension = filePath.toLowerCase().split('.').last;
     const imageExtensions = {
+      // 通用常用格式
       'jpg',
       'jpeg',
       'png',
@@ -15,6 +16,43 @@ class DragDropHandler {
       'tiff',
       'tif',
       'heic',
+      'heif',
+      'avif',
+      'icns',
+
+      // 专业摄影/后期格式
+      'raw',
+      'cr2', // 佳能RAW
+      'cr3', // 佳能RAW
+      'nef', // 尼康RAW
+      'arw', // 索尼RAW
+      'orf', // 奥林巴斯RAW
+      'dng', // Adobe通用RAW
+      // 软件专属/行业专用格式
+      'psd',
+      'pdd',
+      'tga',
+      'pcx',
+      'wmf',
+      'emf',
+      'cur',
+      'ico',
+      'xbm',
+      'xpm',
+
+      // 小众/老旧格式
+      'bpg',
+      'pbm',
+      'pgm',
+      'ppm',
+      'sgi',
+
+      // 矢量图格式（可转换为位图）
+      'svg',
+      'pdf',
+      'eps',
+      'ai',
+      'cdr',
     };
     return imageExtensions.contains(extension);
   }
