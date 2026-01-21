@@ -132,6 +132,13 @@ class ImageService {
           // For WebP, we'll use flutter_image_compress after encoding as PNG/JPG
           encodedData = img.encodePng(processedImage);
           break;
+        case 'tiff':
+        case 'tif':
+          encodedData = img.encodeTiff(processedImage);
+          break;
+        case 'tga':
+          encodedData = img.encodeTga(processedImage);
+          break;
         default:
           encodedData = img.encodePng(processedImage);
       }
@@ -184,10 +191,13 @@ class ImageService {
     double contrast = 1.0,
     double saturation = 1.0,
   }) {
-    // For now, return the original image
-    // Color adjustment functionality requires the correct version of image package
-    // and its API, which varies by version
+    // Return the original image since complex pixel manipulation causes build errors
+    // with different versions of the image package
     return src;
+  }
+
+  static int _clamp(int value, [int min = 0, int max = 255]) {
+    return value.clamp(min, max);
   }
 
   static Future<String> convertFormat(

@@ -230,7 +230,7 @@ class _ImagePreviewState extends State<ImagePreview> {
                   context,
                   listen: false,
                 );
-            imageProvider.setSelectedImage(imageFiles.first);
+            imageProvider.setSelectedImageWithoutPreview(imageFiles.first);
           }
         },
         child: Container(
@@ -252,6 +252,22 @@ class _ImagePreviewState extends State<ImagePreview> {
       );
     }
 
+    // Check if this is the processed image and if it's currently being processed
+    final imageProvider = Provider.of<ImageTransformProvider.ImageProvider>(
+      context,
+    );
+    bool isProcessingPreview =
+        imagePath == imageProvider.processedImagePath &&
+        imageProvider.selectedImagePath != null &&
+        (imageProvider.brightness != 0.0 ||
+            imageProvider.contrast != 1.0 ||
+            imageProvider.saturation != 1.0 ||
+            imageProvider.rotation != 0.0 ||
+            imageProvider.width != 0 ||
+            imageProvider.height != 0 ||
+            imageProvider.quality != 100.0 ||
+            imageProvider.outputFormat != 'png');
+
     return DropTarget(
       onDragDone: (details) {
         final imageFiles = DragDropHandler.handleDrop(details);
@@ -261,28 +277,47 @@ class _ImagePreviewState extends State<ImagePreview> {
                 context,
                 listen: false,
               );
-          imageProvider.setSelectedImage(imageFiles.first);
+          imageProvider.setSelectedImageWithoutPreview(imageFiles.first);
         }
       },
       child: Container(
         color: Theme.of(context).colorScheme.surface,
-        child: InteractiveViewer(
-          clipBehavior: Clip.none,
-          boundaryMargin: const EdgeInsets.all(20.0),
-          minScale: 0.1,
-          maxScale: 5.0,
-          child: Image.file(
-            File(imagePath),
-            fit: BoxFit.contain,
-            errorBuilder: (context, error, stackTrace) {
-              return Container(
-                color: Theme.of(context).colorScheme.surface,
-                child: const Center(
-                  child: Icon(Icons.broken_image, size: 48, color: Colors.grey),
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: InteractiveViewer(
+                clipBehavior: Clip.none,
+                boundaryMargin: const EdgeInsets.all(20.0),
+                minScale: 0.1,
+                maxScale: 5.0,
+                child: Image.file(
+                  File(imagePath),
+                  fit: BoxFit.contain,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      color: Theme.of(context).colorScheme.surface,
+                      child: const Center(
+                        child: Icon(
+                          Icons.broken_image,
+                          size: 48,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    );
+                  },
                 ),
-              );
-            },
-          ),
+              ),
+            ),
+            if (isProcessingPreview)
+              Positioned.fill(
+                child: Container(
+                  color: Colors.black.withOpacity(0.3),
+                  child: const Center(
+                    child: CircularProgressIndicator(strokeWidth: 2.0),
+                  ),
+                ),
+              ),
+          ],
         ),
       ),
     );

@@ -43,7 +43,7 @@ class _MainLayoutState extends State<MainLayout> {
             imageProvider.setBatchInputPaths(batchInputPaths);
           } else {
             // 否则设置第一张图片为预览图
-            imageProvider.setSelectedImage(imageFiles.first);
+            imageProvider.setSelectedImageWithoutPreview(imageFiles.first);
           }
         }
       },
@@ -80,7 +80,7 @@ class _MainLayoutState extends State<MainLayout> {
                       onPressed: () async {
                         final path = await FileService.pickSingleImage();
                         if (path != null) {
-                          imageProvider.setSelectedImage(path);
+                          imageProvider.setSelectedImageWithoutPreview(path);
                         }
                       },
                       style: ButtonStyle(
@@ -107,8 +107,52 @@ class _MainLayoutState extends State<MainLayout> {
                     IconButton(
                       icon: const Icon(Icons.save_outlined, size: 16),
                       tooltip: localizations.export,
-                      onPressed: () {
-                        // Export functionality would go here
+                      onPressed: () async {
+                        if (imageProvider.selectedImagePath != null &&
+                            imageProvider.processedImagePath != null) {
+                          // Export the processed image
+                          try {
+                            String processedImagePath =
+                                imageProvider.processedImagePath!;
+                            String originalPath =
+                                imageProvider.selectedImagePath!;
+                            String fileName = originalPath.split('/').last;
+                            String nameWithoutExt = fileName.substring(
+                              0,
+                              fileName.lastIndexOf('.'),
+                            );
+                            String ext = imageProvider.outputFormat;
+                            String saveFileName =
+                                '${nameWithoutExt}_converted.$ext';
+
+                            // Use file picker to let user choose save location
+                            String? outputPath = await FileService.saveImageAs(
+                              processedImagePath,
+                              saveFileName,
+                            );
+                            if (outputPath != null) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Image saved successfully to $outputPath',
+                                  ),
+                                ),
+                              );
+                            }
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Error saving image: $e')),
+                            );
+                          }
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'No processed image to export. Please select an image and adjust parameters first.',
+                              ),
+                            ),
+                          );
+                        }
                       },
                       style: ButtonStyle(
                         padding: WidgetStateProperty.all(

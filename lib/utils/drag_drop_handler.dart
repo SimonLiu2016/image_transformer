@@ -53,6 +53,16 @@ class DragDropHandler {
       'eps',
       'ai',
       'cdr',
+      'svgz', // SVG压缩格式
+      // 工程制图格式
+      'dwg', // AutoCAD格式
+      'dxf', // AutoCAD交换格式
+      // 传真和移动格式
+      'tfx', // 传真格式
+      'wbmp', // 无线位图格式
+      // 矢量图形格式
+      'cgm', // 计算机图形元文件格式
+      'vml', // 矢量标记语言
     };
     return imageExtensions.contains(extension);
   }

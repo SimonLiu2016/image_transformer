@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 import 'dart:io';
+import 'package:path/path.dart' as path;
 import '../services/image_service.dart';
 
 class ImageProvider extends ChangeNotifier {
@@ -105,6 +106,85 @@ class ImageProvider extends ChangeNotifier {
       outputPath,
       config,
     );
+  }
+
+  // Flag to track if we should process the preview
+  bool _shouldProcessPreview = false;
+
+  Future<void> processImageForPreview() async {
+    if (_selectedImagePath == null) {
+      return;
+    }
+
+    // Only process if we have changes that warrant a preview update
+    if (!_shouldProcessPreview) {
+      return;
+    }
+
+    try {
+      // Clean up previous processed image if it exists
+      if (_processedImagePath != null) {
+        try {
+          File fileToDelete = File(_processedImagePath!);
+          if (await fileToDelete.exists()) {
+            await fileToDelete.delete();
+          }
+        } catch (e) {
+          // Ignore errors when deleting the old preview
+        }
+      }
+
+      // Create a temporary path for the preview in the system temp directory
+      String fileName = path.basename(_selectedImagePath!);
+      String nameWithoutExt = fileName.substring(0, fileName.lastIndexOf('.'));
+      // Sanitize the filename to ensure it's valid for the filesystem
+      String sanitizedBaseName = nameWithoutExt.replaceAll(
+        RegExp(r'[^a-zA-Z0-9_.-]'),
+        '_',
+      );
+      String tempPath = path.join(
+        Directory.systemTemp.path,
+        '${sanitizedBaseName}_preview_temp.${_outputFormat.toLowerCase()}',
+      );
+
+      final config = ImageProcessingConfig(
+        outputFormat: _outputFormat,
+        width: _width > 0 ? _width : null,
+        height: _height > 0 ? _height : null,
+        quality: _quality.round(),
+        brightness: _brightness,
+        contrast: _contrast,
+        saturation: _saturation,
+        rotation: _rotation,
+      );
+
+      String processedPath = await ImageService.processImage(
+        _selectedImagePath!,
+        tempPath,
+        config,
+      );
+
+      _processedImagePath = processedPath;
+      notifyListeners();
+    } catch (e) {
+      print('Error processing image for preview: $e');
+    }
+  }
+
+  // Method to trigger preview processing only when needed
+  void requestPreviewUpdate() {
+    _shouldProcessPreview = true;
+    processImageForPreview();
+  }
+
+  // Method to set the selected image without triggering preview
+  void setSelectedImageWithoutPreview(String path) {
+    _selectedImagePath = path;
+    _processedImagePath =
+        null; // Clear processed image when new image is selected
+    _shouldProcessPreview =
+        false; // Don't process preview until user makes changes
+    notifyListeners();
   }
 
   // Batch processing properties

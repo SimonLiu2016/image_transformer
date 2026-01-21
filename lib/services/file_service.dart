@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
+import 'package:path/path.dart' as path;
 
 class FileService {
   static Future<String?> pickSingleImage() async {
@@ -112,6 +113,16 @@ class FileService {
       'eps',
       'ai',
       'cdr',
+      'svgz', // SVG压缩格式
+      // 工程制图格式
+      'dwg', // AutoCAD格式
+      'dxf', // AutoCAD交换格式
+      // 传真和移动格式
+      'tfx', // 传真格式
+      'wbmp', // 无线位图格式
+      // 矢量图形格式
+      'cgm', // 计算机图形元文件格式
+      'vml', // 矢量标记语言
     };
     return imageExtensions.contains(extension);
   }
@@ -128,5 +139,45 @@ class FileService {
       print('Error validating image file: $e');
       return false;
     }
+  }
+
+  static Future<String?> saveImageAs(
+    String sourceImagePath,
+    String suggestedFileName,
+  ) async {
+    try {
+      // Get the file extension from the original file if suggested name doesn't have one
+      String fileName = suggestedFileName;
+      if (!suggestedFileName.contains('.')) {
+        String originalExt = path.extension(sourceImagePath);
+        fileName = suggestedFileName + originalExt;
+      }
+
+      // Use file_picker to let user choose save location
+      String? outputPath = await FilePicker.platform.saveFile(
+        dialogTitle: 'Save processed image',
+        fileName: fileName,
+        allowedExtensions: [_getImageExtension(fileName)],
+      );
+
+      if (outputPath != null) {
+        // Copy the processed image to the selected location
+        File sourceFile = File(sourceImagePath);
+        await sourceFile.copy(outputPath);
+        return outputPath;
+      }
+
+      return null;
+    } catch (e) {
+      print('Error saving image: $e');
+      return null;
+    }
+  }
+
+  static String _getImageExtension(String fileName) {
+    if (fileName.contains('.')) {
+      return fileName.split('.').last.toLowerCase();
+    }
+    return 'png'; // default extension
   }
 }

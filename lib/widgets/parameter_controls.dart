@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import '../providers/image_provider.dart' as ImageTransformProvider;
 import '../l10n/app_localizations.dart';
 
-class ParameterControls extends StatelessWidget {
+class ParameterControls extends HookWidget {
   const ParameterControls({super.key});
 
   @override
@@ -12,6 +13,18 @@ class ParameterControls extends StatelessWidget {
       context,
     );
     final localizations = AppLocalizations.of(context)!;
+
+    // Trigger preview update when parameters change
+    useEffect(() {
+      void listener() {
+        if (imageProvider.selectedImagePath != null) {
+          imageProvider.processImageForPreview();
+        }
+      }
+
+      imageProvider.addListener(listener);
+      return () => imageProvider.removeListener(listener);
+    }, [imageProvider]);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -54,6 +67,9 @@ class ParameterControls extends StatelessWidget {
                 ),
                 onPressed: () {
                   imageProvider.reset();
+                  if (imageProvider.selectedImagePath != null) {
+                    imageProvider.requestPreviewUpdate();
+                  }
                 },
               ),
             ],
@@ -88,17 +104,21 @@ class ParameterControls extends StatelessWidget {
               const SizedBox(height: 6),
               DropdownButtonFormField<String>(
                 value: imageProvider.outputFormat,
-                items: ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'webp']
-                    .map(
-                      (format) => DropdownMenuItem(
-                        value: format,
-                        child: Text(format.toUpperCase()),
-                      ),
-                    )
-                    .toList(),
+                items:
+                    ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'webp', 'tiff', 'tga']
+                        .map(
+                          (format) => DropdownMenuItem(
+                            value: format,
+                            child: Text(format.toUpperCase()),
+                          ),
+                        )
+                        .toList(),
                 onChanged: (value) {
                   if (value != null) {
                     imageProvider.setOutputFormat(value);
+                    if (imageProvider.selectedImagePath != null) {
+                      imageProvider.requestPreviewUpdate();
+                    }
                   }
                 },
                 decoration: InputDecoration(
@@ -168,6 +188,9 @@ class ParameterControls extends StatelessWidget {
                         } else {
                           imageProvider.setDimensions(0, imageProvider.height);
                         }
+                        if (imageProvider.selectedImagePath != null) {
+                          imageProvider.requestPreviewUpdate();
+                        }
                       },
                     ),
                   ),
@@ -199,6 +222,9 @@ class ParameterControls extends StatelessWidget {
                           );
                         } else {
                           imageProvider.setDimensions(imageProvider.width, 0);
+                        }
+                        if (imageProvider.selectedImagePath != null) {
+                          imageProvider.requestPreviewUpdate();
                         }
                       },
                     ),
@@ -241,6 +267,9 @@ class ParameterControls extends StatelessWidget {
                 label: '${imageProvider.quality.round()}%',
                 onChanged: (value) {
                   imageProvider.setQuality(value);
+                  if (imageProvider.selectedImagePath != null) {
+                    imageProvider.requestPreviewUpdate();
+                  }
                 },
               ),
               Text(
@@ -299,6 +328,9 @@ class ParameterControls extends StatelessWidget {
                 max: 100,
                 onChanged: (value) {
                   imageProvider.setBrightness(value);
+                  if (imageProvider.selectedImagePath != null) {
+                    imageProvider.requestPreviewUpdate();
+                  }
                 },
               ),
 
@@ -323,6 +355,9 @@ class ParameterControls extends StatelessWidget {
                 max: 2,
                 onChanged: (value) {
                   imageProvider.setContrast(value);
+                  if (imageProvider.selectedImagePath != null) {
+                    imageProvider.requestPreviewUpdate();
+                  }
                 },
               ),
 
@@ -350,6 +385,9 @@ class ParameterControls extends StatelessWidget {
                 max: 2,
                 onChanged: (value) {
                   imageProvider.setSaturation(value);
+                  if (imageProvider.selectedImagePath != null) {
+                    imageProvider.requestPreviewUpdate();
+                  }
                 },
               ),
             ],
@@ -400,6 +438,9 @@ class ParameterControls extends StatelessWidget {
                 divisions: 360,
                 onChanged: (value) {
                   imageProvider.setRotation(value);
+                  if (imageProvider.selectedImagePath != null) {
+                    imageProvider.requestPreviewUpdate();
+                  }
                 },
               ),
             ],
