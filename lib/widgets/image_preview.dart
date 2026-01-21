@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:desktop_drop/desktop_drop.dart';
 import 'dart:io';
 import '../providers/image_provider.dart' as ImageTransformProvider;
 import '../l10n/app_localizations.dart';
+import '../utils/drag_drop_handler.dart';
 
 class ImagePreview extends StatefulWidget {
   const ImagePreview({super.key});
@@ -219,42 +221,68 @@ class _ImagePreviewState extends State<ImagePreview> {
 
   Widget _buildImageView(String? imagePath) {
     if (imagePath == null || !File(imagePath).existsSync()) {
-      return Container(
-        color: Theme.of(context).colorScheme.surface,
-        child: const Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.image_not_supported, size: 48, color: Colors.grey),
-              SizedBox(height: 8),
-              Text(
-                'No image to display',
-                style: TextStyle(color: Colors.grey, fontSize: 12),
-              ),
-            ],
+      return DropTarget(
+        onDragDone: (details) {
+          final imageFiles = DragDropHandler.handleDrop(details);
+          if (imageFiles.isNotEmpty) {
+            final imageProvider =
+                Provider.of<ImageTransformProvider.ImageProvider>(
+                  context,
+                  listen: false,
+                );
+            imageProvider.setSelectedImage(imageFiles.first);
+          }
+        },
+        child: Container(
+          color: Theme.of(context).colorScheme.surface,
+          child: const Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.image_not_supported, size: 48, color: Colors.grey),
+                SizedBox(height: 8),
+                Text(
+                  'No image to display',
+                  style: TextStyle(color: Colors.grey, fontSize: 12),
+                ),
+              ],
+            ),
           ),
         ),
       );
     }
 
-    return Container(
-      color: Theme.of(context).colorScheme.surface,
-      child: InteractiveViewer(
-        clipBehavior: Clip.none,
-        boundaryMargin: const EdgeInsets.all(20.0),
-        minScale: 0.1,
-        maxScale: 5.0,
-        child: Image.file(
-          File(imagePath),
-          fit: BoxFit.contain,
-          errorBuilder: (context, error, stackTrace) {
-            return Container(
-              color: Theme.of(context).colorScheme.surface,
-              child: const Center(
-                child: Icon(Icons.broken_image, size: 48, color: Colors.grey),
-              ),
-            );
-          },
+    return DropTarget(
+      onDragDone: (details) {
+        final imageFiles = DragDropHandler.handleDrop(details);
+        if (imageFiles.isNotEmpty) {
+          final imageProvider =
+              Provider.of<ImageTransformProvider.ImageProvider>(
+                context,
+                listen: false,
+              );
+          imageProvider.setSelectedImage(imageFiles.first);
+        }
+      },
+      child: Container(
+        color: Theme.of(context).colorScheme.surface,
+        child: InteractiveViewer(
+          clipBehavior: Clip.none,
+          boundaryMargin: const EdgeInsets.all(20.0),
+          minScale: 0.1,
+          maxScale: 5.0,
+          child: Image.file(
+            File(imagePath),
+            fit: BoxFit.contain,
+            errorBuilder: (context, error, stackTrace) {
+              return Container(
+                color: Theme.of(context).colorScheme.surface,
+                child: const Center(
+                  child: Icon(Icons.broken_image, size: 48, color: Colors.grey),
+                ),
+              );
+            },
+          ),
         ),
       ),
     );
