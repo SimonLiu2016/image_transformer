@@ -73,8 +73,10 @@ class _MainLayoutState extends State<MainLayout> {
                   children: [
                     const Spacer(),
 
-                    // Home button - always shown to provide navigation to main screen
-                    if (!_showSettings) // Only show home button when not in settings mode
+                    // Home button - hidden in batch mode
+                    if (!_showSettings &&
+                        _selectedIndex !=
+                            2) // Only show home button when not in settings mode and not in batch mode
                       IconButton(
                         icon: const Icon(Icons.home, size: 16),
                         tooltip: localizations.title,
@@ -105,8 +107,8 @@ class _MainLayoutState extends State<MainLayout> {
                         ),
                       ),
 
-                    // File operations - hidden when showing settings
-                    if (!_showSettings)
+                    // File operations - hidden when showing settings or in batch mode
+                    if (!_showSettings && _selectedIndex != 2)
                       IconButton(
                         icon: const Icon(Icons.insert_photo_outlined, size: 16),
                         tooltip: localizations.importImage,
@@ -137,7 +139,7 @@ class _MainLayoutState extends State<MainLayout> {
                         ),
                       ),
 
-                    if (!_showSettings)
+                    if (!_showSettings && _selectedIndex != 2)
                       IconButton(
                         icon: const Icon(Icons.save_outlined, size: 16),
                         tooltip: localizations.export,
@@ -215,7 +217,7 @@ class _MainLayoutState extends State<MainLayout> {
                     const SizedBox(width: 8),
 
                     // Separator
-                    if (!_showSettings)
+                    if (!_showSettings && _selectedIndex != 2)
                       Container(
                         width: 1,
                         height: 20,
