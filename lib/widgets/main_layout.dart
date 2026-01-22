@@ -73,121 +73,8 @@ class _MainLayoutState extends State<MainLayout> {
                   children: [
                     const Spacer(),
 
-                    // File operations
-                    IconButton(
-                      icon: const Icon(Icons.insert_photo_outlined, size: 16),
-                      tooltip: localizations.importImage,
-                      onPressed: () async {
-                        final path = await FileService.pickSingleImage();
-                        if (path != null) {
-                          imageProvider.setSelectedImageWithoutPreview(path);
-                        }
-                      },
-                      style: ButtonStyle(
-                        padding: WidgetStateProperty.all(
-                          const EdgeInsets.all(6),
-                        ),
-                        backgroundColor:
-                            WidgetStateProperty.resolveWith<Color?>((
-                              Set<WidgetState> states,
-                            ) {
-                              if (states.contains(WidgetState.hovered)) {
-                                return Theme.of(context).dividerColor;
-                              }
-                              return Colors.transparent;
-                            }),
-                        shape: WidgetStateProperty.all(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(4.0),
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    IconButton(
-                      icon: const Icon(Icons.save_outlined, size: 16),
-                      tooltip: localizations.export,
-                      onPressed: () async {
-                        if (imageProvider.selectedImagePath != null &&
-                            imageProvider.processedImagePath != null) {
-                          // Export the processed image
-                          try {
-                            String processedImagePath =
-                                imageProvider.processedImagePath!;
-                            String originalPath =
-                                imageProvider.selectedImagePath!;
-                            String fileName = originalPath.split('/').last;
-                            String nameWithoutExt = fileName.substring(
-                              0,
-                              fileName.lastIndexOf('.'),
-                            );
-                            String ext = imageProvider.outputFormat;
-                            String saveFileName =
-                                '${nameWithoutExt}_converted.$ext';
-
-                            // Use file picker to let user choose save location
-                            String? outputPath = await FileService.saveImageAs(
-                              processedImagePath,
-                              saveFileName,
-                            );
-                            if (outputPath != null) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    'Image saved successfully to $outputPath',
-                                  ),
-                                ),
-                              );
-                            }
-                          } catch (e) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('Error saving image: $e')),
-                            );
-                          }
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                'No processed image to export. Please select an image and adjust parameters first.',
-                              ),
-                            ),
-                          );
-                        }
-                      },
-                      style: ButtonStyle(
-                        padding: WidgetStateProperty.all(
-                          const EdgeInsets.all(6),
-                        ),
-                        backgroundColor:
-                            WidgetStateProperty.resolveWith<Color?>((
-                              Set<WidgetState> states,
-                            ) {
-                              if (states.contains(WidgetState.hovered)) {
-                                return Theme.of(context).dividerColor;
-                              }
-                              return Colors.transparent;
-                            }),
-                        shape: WidgetStateProperty.all(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(4.0),
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(width: 8),
-
-                    // Separator
-                    Container(
-                      width: 1,
-                      height: 20,
-                      color: Theme.of(context).dividerColor,
-                    ),
-
-                    const SizedBox(width: 8),
-
-                    // Navigation buttons
-                    if (_selectedIndex != 0 && !_showSettings) // Home button
+                    // Home button - always shown to provide navigation to main screen
+                    if (!_showSettings) // Only show home button when not in settings mode
                       IconButton(
                         icon: const Icon(Icons.home, size: 16),
                         tooltip: localizations.title,
@@ -218,15 +105,16 @@ class _MainLayoutState extends State<MainLayout> {
                         ),
                       ),
 
-                    if (_selectedIndex != 1 && !_showSettings) // Preview button
+                    // File operations - hidden when showing settings
+                    if (!_showSettings)
                       IconButton(
-                        icon: const Icon(Icons.photo, size: 16),
-                        tooltip: localizations.imagePreview,
-                        onPressed: () {
-                          setState(() {
-                            _selectedIndex = 1;
-                            _showSettings = false;
-                          });
+                        icon: const Icon(Icons.insert_photo_outlined, size: 16),
+                        tooltip: localizations.importImage,
+                        onPressed: () async {
+                          final path = await FileService.pickSingleImage();
+                          if (path != null) {
+                            imageProvider.setSelectedImageWithoutPreview(path);
+                          }
                         },
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all(
@@ -249,15 +137,59 @@ class _MainLayoutState extends State<MainLayout> {
                         ),
                       ),
 
-                    if (_selectedIndex != 2 && !_showSettings) // Batch button
+                    if (!_showSettings)
                       IconButton(
-                        icon: const Icon(Icons.batch_prediction, size: 16),
-                        tooltip: localizations.batchMode,
-                        onPressed: () {
-                          setState(() {
-                            _selectedIndex = 2;
-                            _showSettings = false;
-                          });
+                        icon: const Icon(Icons.save_outlined, size: 16),
+                        tooltip: localizations.export,
+                        onPressed: () async {
+                          if (imageProvider.selectedImagePath != null &&
+                              imageProvider.processedImagePath != null) {
+                            // Export the processed image
+                            try {
+                              String processedImagePath =
+                                  imageProvider.processedImagePath!;
+                              String originalPath =
+                                  imageProvider.selectedImagePath!;
+                              String fileName = originalPath.split('/').last;
+                              String nameWithoutExt = fileName.substring(
+                                0,
+                                fileName.lastIndexOf('.'),
+                              );
+                              String ext = imageProvider.outputFormat;
+                              String saveFileName =
+                                  '${nameWithoutExt}_converted.$ext';
+
+                              // Use file picker to let user choose save location
+                              String? outputPath =
+                                  await FileService.saveImageAs(
+                                    processedImagePath,
+                                    saveFileName,
+                                  );
+                              if (outputPath != null) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'Image saved successfully to $outputPath',
+                                    ),
+                                  ),
+                                );
+                              }
+                            } catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Error saving image: $e'),
+                                ),
+                              );
+                            }
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'No processed image to export. Please select an image and adjust parameters first.',
+                                ),
+                              ),
+                            );
+                          }
                         },
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all(
@@ -279,6 +211,114 @@ class _MainLayoutState extends State<MainLayout> {
                           ),
                         ),
                       ),
+
+                    const SizedBox(width: 8),
+
+                    // Separator
+                    if (!_showSettings)
+                      Container(
+                        width: 1,
+                        height: 20,
+                        color: Theme.of(context).dividerColor,
+                      ),
+
+                    const SizedBox(width: 8),
+
+                    // Navigation buttons - correct cycling logic
+                    if (!_showSettings)
+                      if (_selectedIndex ==
+                          0) // On Home screen, show Batch button
+                        IconButton(
+                          icon: const Icon(Icons.batch_prediction, size: 16),
+                          tooltip: localizations.batchMode,
+                          onPressed: () {
+                            setState(() {
+                              _selectedIndex = 2;
+                              _showSettings = false;
+                            });
+                          },
+                          style: ButtonStyle(
+                            padding: WidgetStateProperty.all(
+                              const EdgeInsets.all(6),
+                            ),
+                            backgroundColor:
+                                WidgetStateProperty.resolveWith<Color?>((
+                                  Set<WidgetState> states,
+                                ) {
+                                  if (states.contains(WidgetState.hovered)) {
+                                    return Theme.of(context).dividerColor;
+                                  }
+                                  return Colors.transparent;
+                                }),
+                            shape: WidgetStateProperty.all(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4.0),
+                              ),
+                            ),
+                          ),
+                        )
+                      else if (_selectedIndex ==
+                          1) // On Preview screen, show Home button
+                        IconButton(
+                          icon: const Icon(Icons.home, size: 16),
+                          tooltip: localizations.title,
+                          onPressed: () {
+                            setState(() {
+                              _selectedIndex = 0;
+                              _showSettings = false;
+                            });
+                          },
+                          style: ButtonStyle(
+                            padding: WidgetStateProperty.all(
+                              const EdgeInsets.all(6),
+                            ),
+                            backgroundColor:
+                                WidgetStateProperty.resolveWith<Color?>((
+                                  Set<WidgetState> states,
+                                ) {
+                                  if (states.contains(WidgetState.hovered)) {
+                                    return Theme.of(context).dividerColor;
+                                  }
+                                  return Colors.transparent;
+                                }),
+                            shape: WidgetStateProperty.all(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4.0),
+                              ),
+                            ),
+                          ),
+                        )
+                      else if (_selectedIndex ==
+                          2) // On Batch screen, show Preview button
+                        IconButton(
+                          icon: const Icon(Icons.photo, size: 16),
+                          tooltip: localizations.imagePreview,
+                          onPressed: () {
+                            setState(() {
+                              _selectedIndex = 1;
+                              _showSettings = false;
+                            });
+                          },
+                          style: ButtonStyle(
+                            padding: WidgetStateProperty.all(
+                              const EdgeInsets.all(6),
+                            ),
+                            backgroundColor:
+                                WidgetStateProperty.resolveWith<Color?>((
+                                  Set<WidgetState> states,
+                                ) {
+                                  if (states.contains(WidgetState.hovered)) {
+                                    return Theme.of(context).dividerColor;
+                                  }
+                                  return Colors.transparent;
+                                }),
+                            shape: WidgetStateProperty.all(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4.0),
+                              ),
+                            ),
+                          ),
+                        ),
 
                     // Language selector
                     PopupMenuButton<String>(
@@ -339,35 +379,36 @@ class _MainLayoutState extends State<MainLayout> {
                       offset: const Offset(0, 40),
                     ),
 
-                    // Settings button
-                    IconButton(
-                      icon: const Icon(Icons.settings_outlined, size: 16),
-                      tooltip: localizations.settings,
-                      onPressed: () {
-                        setState(() {
-                          _showSettings = true;
-                        });
-                      },
-                      style: ButtonStyle(
-                        padding: WidgetStateProperty.all(
-                          const EdgeInsets.all(6),
-                        ),
-                        backgroundColor:
-                            WidgetStateProperty.resolveWith<Color?>((
-                              Set<WidgetState> states,
-                            ) {
-                              if (states.contains(WidgetState.hovered)) {
-                                return Theme.of(context).dividerColor;
-                              }
-                              return Colors.transparent;
-                            }),
-                        shape: WidgetStateProperty.all(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(4.0),
+                    // Settings button - hidden when showing settings
+                    if (!_showSettings)
+                      IconButton(
+                        icon: const Icon(Icons.settings_outlined, size: 16),
+                        tooltip: localizations.settings,
+                        onPressed: () {
+                          setState(() {
+                            _showSettings = true;
+                          });
+                        },
+                        style: ButtonStyle(
+                          padding: WidgetStateProperty.all(
+                            const EdgeInsets.all(6),
+                          ),
+                          backgroundColor:
+                              WidgetStateProperty.resolveWith<Color?>((
+                                Set<WidgetState> states,
+                              ) {
+                                if (states.contains(WidgetState.hovered)) {
+                                  return Theme.of(context).dividerColor;
+                                }
+                                return Colors.transparent;
+                              }),
+                          shape: WidgetStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4.0),
+                            ),
                           ),
                         ),
                       ),
-                    ),
 
                     if (_showSettings) // Back button
                       IconButton(
