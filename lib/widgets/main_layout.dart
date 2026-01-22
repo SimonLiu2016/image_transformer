@@ -224,7 +224,7 @@ class _MainLayoutState extends State<MainLayout> {
 
                     const SizedBox(width: 8),
 
-                    // Navigation buttons - correct cycling logic
+                    // Navigation buttons - toggle between Home and Batch modes
                     if (!_showSettings)
                       if (_selectedIndex ==
                           0) // On Home screen, show Batch button
@@ -258,10 +258,10 @@ class _MainLayoutState extends State<MainLayout> {
                           ),
                         )
                       else if (_selectedIndex ==
-                          1) // On Preview screen, show Home button
+                          2) // On Batch screen, show Home/Preview button
                         IconButton(
-                          icon: const Icon(Icons.home, size: 16),
-                          tooltip: localizations.title,
+                          icon: const Icon(Icons.photo, size: 16),
+                          tooltip: localizations.imagePreview,
                           onPressed: () {
                             setState(() {
                               _selectedIndex = 0;
@@ -287,39 +287,7 @@ class _MainLayoutState extends State<MainLayout> {
                               ),
                             ),
                           ),
-                        )
-                      else if (_selectedIndex ==
-                          2) // On Batch screen, show Preview button
-                        IconButton(
-                          icon: const Icon(Icons.photo, size: 16),
-                          tooltip: localizations.imagePreview,
-                          onPressed: () {
-                            setState(() {
-                              _selectedIndex = 1;
-                              _showSettings = false;
-                            });
-                          },
-                          style: ButtonStyle(
-                            padding: WidgetStateProperty.all(
-                              const EdgeInsets.all(6),
-                            ),
-                            backgroundColor:
-                                WidgetStateProperty.resolveWith<Color?>((
-                                  Set<WidgetState> states,
-                                ) {
-                                  if (states.contains(WidgetState.hovered)) {
-                                    return Theme.of(context).dividerColor;
-                                  }
-                                  return Colors.transparent;
-                                }),
-                            shape: WidgetStateProperty.all(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4.0),
-                              ),
-                            ),
-                          ),
                         ),
-
                     // Language selector
                     PopupMenuButton<String>(
                       icon: const Icon(Icons.language, size: 16),
