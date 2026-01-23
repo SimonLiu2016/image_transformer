@@ -107,8 +107,8 @@ class _MainLayoutState extends State<MainLayout> {
                         ),
                       ),
 
-                    // File operations - hidden when showing settings or in batch mode
-                    if (!_showSettings && _selectedIndex != 2)
+                    // File operations - hidden when showing settings
+                    if (!_showSettings)
                       IconButton(
                         icon: const Icon(Icons.insert_photo_outlined, size: 16),
                         tooltip: localizations.importImage,
@@ -126,6 +126,8 @@ class _MainLayoutState extends State<MainLayout> {
                               imageProvider.setSelectedImageWithoutPreview(
                                 path,
                               );
+                              // Request preview update after setting the image
+                              imageProvider.requestPreviewUpdate();
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
@@ -166,7 +168,7 @@ class _MainLayoutState extends State<MainLayout> {
                         ),
                       ),
 
-                    if (!_showSettings && _selectedIndex != 2)
+                    if (!_showSettings)
                       IconButton(
                         icon: const Icon(Icons.save_outlined, size: 16),
                         tooltip: localizations.export,
@@ -244,7 +246,7 @@ class _MainLayoutState extends State<MainLayout> {
                     const SizedBox(width: 8),
 
                     // Separator
-                    if (!_showSettings && _selectedIndex != 2)
+                    if (!_showSettings)
                       Container(
                         width: 1,
                         height: 20,

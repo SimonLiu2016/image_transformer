@@ -168,6 +168,7 @@ class FileService {
       String? outputPath = await FilePicker.platform.saveFile(
         dialogTitle: 'Save processed image',
         fileName: fileName,
+        type: FileType.custom,
         allowedExtensions: [_getImageExtension(fileName)],
       );
 
