@@ -73,39 +73,7 @@ class _MainLayoutState extends State<MainLayout> {
                   children: [
                     const Spacer(),
 
-                    // Home button - hidden in batch mode
-                    if (!_showSettings &&
-                        _selectedIndex !=
-                            2) // Only show home button when not in settings mode and not in batch mode
-                      IconButton(
-                        icon: const Icon(Icons.home, size: 16),
-                        tooltip: localizations.title,
-                        onPressed: () {
-                          setState(() {
-                            _selectedIndex = 0;
-                            _showSettings = false;
-                          });
-                        },
-                        style: ButtonStyle(
-                          padding: WidgetStateProperty.all(
-                            const EdgeInsets.all(6),
-                          ),
-                          backgroundColor:
-                              WidgetStateProperty.resolveWith<Color?>((
-                                Set<WidgetState> states,
-                              ) {
-                                if (states.contains(WidgetState.hovered)) {
-                                  return Theme.of(context).dividerColor;
-                                }
-                                return Colors.transparent;
-                              }),
-                          shape: WidgetStateProperty.all(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4.0),
-                            ),
-                          ),
-                        ),
-                      ),
+                    const SizedBox(width: 8),
 
                     // File operations - hidden when showing settings
                     if (!_showSettings)
@@ -167,6 +135,7 @@ class _MainLayoutState extends State<MainLayout> {
                           ),
                         ),
                       ),
+                    const SizedBox(width: 8),
 
                     if (!_showSettings)
                       IconButton(
@@ -245,79 +214,98 @@ class _MainLayoutState extends State<MainLayout> {
 
                     const SizedBox(width: 8),
 
-                    // Separator
-                    if (!_showSettings)
-                      Container(
-                        width: 1,
-                        height: 20,
-                        color: Theme.of(context).dividerColor,
-                      ),
-
-                    const SizedBox(width: 8),
-
-                    // Navigation buttons - toggle between Home and Batch modes
+                    // Navigation buttons - toggle between Preview and Batch modes
                     if (!_showSettings)
                       if (_selectedIndex ==
-                          0) // On Home screen, show Batch button
-                        IconButton(
-                          icon: const Icon(Icons.batch_prediction, size: 16),
-                          tooltip: localizations.batchMode,
-                          onPressed: () {
-                            setState(() {
-                              _selectedIndex = 2;
-                              _showSettings = false;
-                            });
-                          },
-                          style: ButtonStyle(
-                            padding: WidgetStateProperty.all(
-                              const EdgeInsets.all(6),
-                            ),
-                            backgroundColor:
-                                WidgetStateProperty.resolveWith<Color?>((
-                                  Set<WidgetState> states,
-                                ) {
-                                  if (states.contains(WidgetState.hovered)) {
-                                    return Theme.of(context).dividerColor;
-                                  }
-                                  return Colors.transparent;
-                                }),
-                            shape: WidgetStateProperty.all(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4.0),
+                          0) // On Preview screen, show Batch button
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              icon: const Icon(
+                                Icons.batch_prediction,
+                                size: 16,
+                              ),
+                              tooltip: localizations.batchMode,
+                              onPressed: () {
+                                setState(() {
+                                  _selectedIndex = 2;
+                                  _showSettings = false;
+                                });
+                              },
+                              style: ButtonStyle(
+                                padding: WidgetStateProperty.all(
+                                  const EdgeInsets.all(6),
+                                ),
+                                backgroundColor:
+                                    WidgetStateProperty.resolveWith<Color?>((
+                                      Set<WidgetState> states,
+                                    ) {
+                                      if (states.contains(
+                                        WidgetState.hovered,
+                                      )) {
+                                        return Theme.of(context).dividerColor;
+                                      }
+                                      return Colors.transparent;
+                                    }),
+                                shape: WidgetStateProperty.all(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(4.0),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
+                            // Separator after the mode switch button
+                            Container(
+                              width: 1,
+                              height: 20,
+                              color: Theme.of(context).dividerColor,
+                            ),
+                          ],
                         )
                       else if (_selectedIndex ==
-                          2) // On Batch screen, show Home/Preview button
-                        IconButton(
-                          icon: const Icon(Icons.photo, size: 16),
-                          tooltip: localizations.imagePreview,
-                          onPressed: () {
-                            setState(() {
-                              _selectedIndex = 0;
-                              _showSettings = false;
-                            });
-                          },
-                          style: ButtonStyle(
-                            padding: WidgetStateProperty.all(
-                              const EdgeInsets.all(6),
-                            ),
-                            backgroundColor:
-                                WidgetStateProperty.resolveWith<Color?>((
-                                  Set<WidgetState> states,
-                                ) {
-                                  if (states.contains(WidgetState.hovered)) {
-                                    return Theme.of(context).dividerColor;
-                                  }
-                                  return Colors.transparent;
-                                }),
-                            shape: WidgetStateProperty.all(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4.0),
+                          2) // On Batch screen, show Preview button
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.photo, size: 16),
+                              tooltip: localizations.imagePreview,
+                              onPressed: () {
+                                setState(() {
+                                  _selectedIndex = 0;
+                                  _showSettings = false;
+                                });
+                              },
+                              style: ButtonStyle(
+                                padding: WidgetStateProperty.all(
+                                  const EdgeInsets.all(6),
+                                ),
+                                backgroundColor:
+                                    WidgetStateProperty.resolveWith<Color?>((
+                                      Set<WidgetState> states,
+                                    ) {
+                                      if (states.contains(
+                                        WidgetState.hovered,
+                                      )) {
+                                        return Theme.of(context).dividerColor;
+                                      }
+                                      return Colors.transparent;
+                                    }),
+                                shape: WidgetStateProperty.all(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(4.0),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
+                            // Separator after the mode switch button
+                            Container(
+                              width: 1,
+                              height: 20,
+                              color: Theme.of(context).dividerColor,
+                            ),
+                          ],
                         ),
                     // Language selector
                     PopupMenuButton<String>(
@@ -457,10 +445,31 @@ class _MainLayoutState extends State<MainLayout> {
                           color: Theme.of(context).scaffoldBackgroundColor,
                           child: const SettingsPage(),
                         ),
-                        // Batch processor
+                        // Batch processor with sidebar - show both in batch mode
                         Container(
                           color: Theme.of(context).scaffoldBackgroundColor,
-                          child: const BatchProcessor(),
+                          child: Row(
+                            children: [
+                              // Left side - Batch processor
+                              Expanded(flex: 2, child: const BatchProcessor()),
+                              // Right side - Parameter controls (SidebarPanel)
+                              Container(
+                                width: 280,
+                                decoration: BoxDecoration(
+                                  color: Theme.of(
+                                    context,
+                                  ).scaffoldBackgroundColor,
+                                  border: Border(
+                                    left: BorderSide(
+                                      color: Theme.of(context).dividerColor,
+                                      width: 1,
+                                    ),
+                                  ),
+                                ),
+                                child: SidebarPanel(),
+                              ),
+                            ],
+                          ),
                         ),
                         // Image preview
                         ImagePreview(),
@@ -469,6 +478,7 @@ class _MainLayoutState extends State<MainLayout> {
                   ),
 
                   // Right sidebar - similar to professional software's properties panel
+                  // Only show for non-batch modes (single image processing)
                   if (!_showSettings && _selectedIndex != 2)
                     Container(
                       width: 280,
