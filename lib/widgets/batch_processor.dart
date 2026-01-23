@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:desktop_drop/desktop_drop.dart';
+import 'package:file_picker/file_picker.dart';
 import '../providers/image_provider.dart' as ImageTransformProvider;
 import '../services/file_service.dart';
 import '../l10n/app_localizations.dart';
@@ -92,16 +93,28 @@ class _BatchProcessorState extends State<BatchProcessor> {
                     ),
                   ),
                   onPressed: () async {
-                    // For now, we'll just show a placeholder - actual folder selection
-                    // would require additional implementation
-                    final path = await FileService.pickSingleImage();
-                    if (path != null &&
+                    // Select output directory for batch processing
+                    final outputDirectory = await FilePicker.platform.getDirectoryPath();
+                    if (outputDirectory != null &&
                         imageProvider.batchInputPaths.isNotEmpty) {
-                      String outputDir = path.substring(
-                        0,
-                        path.lastIndexOf('/'),
+                      // Store the output directory but don't start processing yet
+                      // The actual processing happens when the start button is clicked
+                      // For now, we'll just show a snackbar to confirm the selection
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Output directory selected: $outputDirectory',
+                          ),
+                        ),
                       );
-                      imageProvider.startBatchProcess(outputDir);
+                    } else if (imageProvider.batchInputPaths.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Please add images to the batch list first.',
+                          ),
+                        ),
+                      );
                     }
                   },
                 ),
