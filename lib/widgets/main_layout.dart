@@ -73,6 +73,100 @@ class _MainLayoutState extends State<MainLayout> {
                   children: [
                     const Spacer(),
 
+                    // Navigation buttons - toggle between Preview and Batch modes
+                    if (!_showSettings)
+                      if (_selectedIndex ==
+                          0) // On Preview screen, show Batch button
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              icon: const Icon(
+                                Icons.batch_prediction,
+                                size: 16,
+                              ),
+                              tooltip: localizations.batchMode,
+                              onPressed: () {
+                                setState(() {
+                                  _selectedIndex = 2;
+                                  _showSettings = false;
+                                });
+                              },
+                              style: ButtonStyle(
+                                padding: WidgetStateProperty.all(
+                                  const EdgeInsets.all(6),
+                                ),
+                                backgroundColor:
+                                    WidgetStateProperty.resolveWith<Color?>((
+                                      Set<WidgetState> states,
+                                    ) {
+                                      if (states.contains(
+                                        WidgetState.hovered,
+                                      )) {
+                                        return Theme.of(context).dividerColor;
+                                      }
+                                      return Colors.transparent;
+                                    }),
+                                shape: WidgetStateProperty.all(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(4.0),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            // Separator after the mode switch button
+                            Container(
+                              width: 1,
+                              height: 20,
+                              color: Theme.of(context).dividerColor,
+                            ),
+                          ],
+                        )
+                      else if (_selectedIndex ==
+                          2) // On Batch screen, show Preview button
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.photo, size: 16),
+                              tooltip: localizations.imagePreview,
+                              onPressed: () {
+                                setState(() {
+                                  _selectedIndex = 0;
+                                  _showSettings = false;
+                                });
+                              },
+                              style: ButtonStyle(
+                                padding: WidgetStateProperty.all(
+                                  const EdgeInsets.all(6),
+                                ),
+                                backgroundColor:
+                                    WidgetStateProperty.resolveWith<Color?>((
+                                      Set<WidgetState> states,
+                                    ) {
+                                      if (states.contains(
+                                        WidgetState.hovered,
+                                      )) {
+                                        return Theme.of(context).dividerColor;
+                                      }
+                                      return Colors.transparent;
+                                    }),
+                                shape: WidgetStateProperty.all(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(4.0),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            // Separator after the mode switch button
+                            Container(
+                              width: 1,
+                              height: 20,
+                              color: Theme.of(context).dividerColor,
+                            ),
+                          ],
+                        ),
+
                     const SizedBox(width: 8),
 
                     // File operations - hidden when showing settings
@@ -214,99 +308,6 @@ class _MainLayoutState extends State<MainLayout> {
 
                     const SizedBox(width: 8),
 
-                    // Navigation buttons - toggle between Preview and Batch modes
-                    if (!_showSettings)
-                      if (_selectedIndex ==
-                          0) // On Preview screen, show Batch button
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            IconButton(
-                              icon: const Icon(
-                                Icons.batch_prediction,
-                                size: 16,
-                              ),
-                              tooltip: localizations.batchMode,
-                              onPressed: () {
-                                setState(() {
-                                  _selectedIndex = 2;
-                                  _showSettings = false;
-                                });
-                              },
-                              style: ButtonStyle(
-                                padding: WidgetStateProperty.all(
-                                  const EdgeInsets.all(6),
-                                ),
-                                backgroundColor:
-                                    WidgetStateProperty.resolveWith<Color?>((
-                                      Set<WidgetState> states,
-                                    ) {
-                                      if (states.contains(
-                                        WidgetState.hovered,
-                                      )) {
-                                        return Theme.of(context).dividerColor;
-                                      }
-                                      return Colors.transparent;
-                                    }),
-                                shape: WidgetStateProperty.all(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(4.0),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            // Separator after the mode switch button
-                            Container(
-                              width: 1,
-                              height: 20,
-                              color: Theme.of(context).dividerColor,
-                            ),
-                          ],
-                        )
-                      else if (_selectedIndex ==
-                          2) // On Batch screen, show Preview button
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            IconButton(
-                              icon: const Icon(Icons.photo, size: 16),
-                              tooltip: localizations.imagePreview,
-                              onPressed: () {
-                                setState(() {
-                                  _selectedIndex = 0;
-                                  _showSettings = false;
-                                });
-                              },
-                              style: ButtonStyle(
-                                padding: WidgetStateProperty.all(
-                                  const EdgeInsets.all(6),
-                                ),
-                                backgroundColor:
-                                    WidgetStateProperty.resolveWith<Color?>((
-                                      Set<WidgetState> states,
-                                    ) {
-                                      if (states.contains(
-                                        WidgetState.hovered,
-                                      )) {
-                                        return Theme.of(context).dividerColor;
-                                      }
-                                      return Colors.transparent;
-                                    }),
-                                shape: WidgetStateProperty.all(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(4.0),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            // Separator after the mode switch button
-                            Container(
-                              width: 1,
-                              height: 20,
-                              color: Theme.of(context).dividerColor,
-                            ),
-                          ],
-                        ),
                     // Language selector
                     PopupMenuButton<String>(
                       icon: const Icon(Icons.language, size: 16),
