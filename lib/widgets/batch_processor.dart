@@ -94,12 +94,13 @@ class _BatchProcessorState extends State<BatchProcessor> {
                   ),
                   onPressed: () async {
                     // Select output directory for batch processing
-                    final outputDirectory = await FilePicker.platform.getDirectoryPath();
+                    final outputDirectory = await FilePicker.platform
+                        .getDirectoryPath();
                     if (outputDirectory != null &&
                         imageProvider.batchInputPaths.isNotEmpty) {
-                      // Store the output directory but don't start processing yet
-                      // The actual processing happens when the start button is clicked
-                      // For now, we'll just show a snackbar to confirm the selection
+                      // Store the output directory in ImageProvider
+                      imageProvider.setBatchOutputDirectory(outputDirectory);
+
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text(
@@ -119,9 +120,19 @@ class _BatchProcessorState extends State<BatchProcessor> {
                   },
                 ),
                 OutlinedButton.icon(
-                  icon: const Icon(Icons.stop, size: 16),
+                  icon: Icon(
+                    imageProvider.isBatchProcessing
+                        ? Icons.stop
+                        : Icons.play_arrow,
+                    size: 16,
+                    color: imageProvider.isBatchProcessing
+                        ? Colors.red
+                        : Colors.green,
+                  ),
                   label: Text(
-                    localizations.cancel,
+                    imageProvider.isBatchProcessing
+                        ? localizations.cancel
+                        : 'Start', // Use literal string since there's no "start" localization
                     style: const TextStyle(fontSize: 12),
                   ),
                   style: ButtonStyle(
@@ -131,6 +142,14 @@ class _BatchProcessorState extends State<BatchProcessor> {
                   ),
                   onPressed: imageProvider.isBatchProcessing
                       ? imageProvider.cancelBatchProcessing
+                      : (imageProvider.batchInputPaths.isNotEmpty &&
+                            imageProvider.batchOutputDirectory != null)
+                      ? () async {
+                          // Start batch processing with stored output directory
+                          await imageProvider.startBatchProcess(
+                            imageProvider.batchOutputDirectory!,
+                          );
+                        }
                       : null,
                 ),
               ],
