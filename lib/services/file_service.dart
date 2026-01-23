@@ -4,15 +4,26 @@ import 'package:path/path.dart' as path;
 
 class FileService {
   static Future<String?> pickSingleImage() async {
+    print('pickSingleImage called'); // Debug log
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
         type: FileType.image,
         allowMultiple: false,
       );
+      print('FilePicker result: $result'); // Debug log
+      print('FilePicker result.files: ${result?.files}'); // Debug log
+      print(
+        'FilePicker result.files.length: ${result?.files.length}',
+      ); // Debug log
 
-      if (result != null && result.files.single.path != null) {
-        return result.files.single.path!;
+      if (result != null && result.files.isNotEmpty) {
+        var file = result.files.first;
+        print('Selected file path: ${file.path}'); // Debug log
+        if (file.path != null) {
+          return file.path!;
+        }
       }
+      print('Returning null from pickSingleImage'); // Debug log
       return null;
     } catch (e) {
       print('Error picking image: $e');

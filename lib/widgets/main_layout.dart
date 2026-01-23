@@ -113,9 +113,36 @@ class _MainLayoutState extends State<MainLayout> {
                         icon: const Icon(Icons.insert_photo_outlined, size: 16),
                         tooltip: localizations.importImage,
                         onPressed: () async {
+                          print('Import button pressed'); // Debug log
                           final path = await FileService.pickSingleImage();
+                          print(
+                            'File picker returned: ' + (path ?? 'null'),
+                          ); // Debug log
                           if (path != null) {
-                            imageProvider.setSelectedImageWithoutPreview(path);
+                            try {
+                              print(
+                                'Setting selected image: $path',
+                              ); // Debug log
+                              imageProvider.setSelectedImageWithoutPreview(
+                                path,
+                              );
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Image imported successfully: ${path.split("/").last}',
+                                  ),
+                                ),
+                              );
+                            } catch (e) {
+                              print('Error setting image: $e'); // Debug log
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Error importing image: $e'),
+                                ),
+                              );
+                            }
+                          } else {
+                            print('No file selected'); // Debug log
                           }
                         },
                         style: ButtonStyle(
